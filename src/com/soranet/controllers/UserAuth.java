@@ -4,6 +4,10 @@ import com.soranet.model.UserModel;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class manages user authentication and registration. It handles login,
+ * sign-up, checking user roles (admin), and retrieving user data.
+ */
 public class UserAuth {
 
     private final String Admin_username = "admin";
@@ -15,9 +19,12 @@ public class UserAuth {
 
     private String loggedInUsername = null;
 
-    // List to store user data
     private final List<UserModel> users = new ArrayList<>();
 
+    /**
+     * Constructor initializes the system with default users (admin and one
+     * regular user).
+     */
     public UserAuth() {
         // Add default admin and user to the list
         users.add(new UserModel(Admin_username, Admin_password));
@@ -25,17 +32,19 @@ public class UserAuth {
     }
 
     /**
-     * Method to handle user signup.
+     * Handles user sign-up by checking if the username already exists. If not,
+     * the new user is added to the system.
      *
-     * @param username Username provided by the user
-     * @param password Password provided by the user
-     * @param email Email provided by the user
-     * @return true if signup is successful, false if username already exists
+     * @param username The username provided by the user.
+     * @param password The password provided by the user.
+     * @param email The email provided by the user.
+     * @return true if sign-up is successful, false if the username already
+     * exists.
      */
     public boolean signup(String username, String password, String email) {
         // Check if the username already exists
         if (getUserByUsername(username) != null) {
-            return false;
+            return false; // Username already exists
         }
         loggedInUsername = username;
         // Add new user to the system
@@ -44,11 +53,11 @@ public class UserAuth {
     }
 
     /**
-     * Method to handle user login.
+     * Handles user login by verifying the username and password.
      *
-     * @param username Username provided by the user
-     * @param password Password provided by the user
-     * @return true if login is successful, otherwise return false
+     * @param username The username provided by the user.
+     * @param password The password provided by the user.
+     * @return true if login is successful, otherwise false.
      */
     public boolean login(String username, String password) {
         UserModel user = getUserByUsername(username);
@@ -60,39 +69,46 @@ public class UserAuth {
     }
 
     /**
-     * Method to get the total number of users in the system.
+     * Returns the total number of users in the system.
      *
-     * @return Total number of users
+     * @return The total number of users.
      */
     public int getUserCount() {
         return users.size();
     }
 
     /**
-     * Method to check if a username belongs to an admin.
+     * Checks if the given username belongs to the admin.
      *
-     * @param username Username to be checked
-     * @return true if the provided username matches the admin username,
-     * otherwise false
+     * @param username The username to check.
+     * @return true if the username matches the admin username, otherwise false.
      */
     public boolean isAdmin(String username) {
         return Admin_username.equals(username);
     }
 
     /**
-     * Method to retrieve the currently logged-in username.
+     * Retrieves the username of the currently logged-in user.
      *
-     * @return The username of the currently logged-in user
+     * @return The username of the logged-in user.
      */
     public String getLoggedInUsername() {
         return loggedInUsername;
     }
 
     /**
-     * Helper method to find a user by username.
+     * Logs out the currently logged-in user by setting the loggedInUsername to
+     * null.
+     */
+    public void logOut() {
+        loggedInUsername = null;
+    }
+
+    /**
+     * Helper method to find a user by their username.
      *
-     * @param username Username to search for
-     * @return The UserModel if found, otherwise null
+     * @param username The username to search for.
+     * @return The UserModel if the user is found, otherwise null.
      */
     public UserModel getUserByUsername(String username) {
         for (UserModel user : users) {

@@ -276,13 +276,13 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="239" max="-2" attributes="0"/>
-                      <Component id="jButton8" min="-2" pref="7" max="-2" attributes="0"/>
+                      <Component id="logobar1" min="-2" pref="7" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Component id="Logo2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                      <Component id="logo" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-                      <Component id="jButton9" min="-2" max="-2" attributes="0"/>
+                      <Component id="logobar2" min="-2" max="-2" attributes="0"/>
                       <EmptySpace pref="185" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -294,15 +294,15 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="361" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="logo" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="Logo2" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="343" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jButton8" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jButton9" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="logobar1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="logobar2" alignment="0" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -320,7 +320,7 @@
                 <Property name="text" type="java.lang.String" value="Sora"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel8">
+            <Component class="javax.swing.JLabel" name="logo">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Arial" size="48" style="1"/>
@@ -331,7 +331,7 @@
                 <Property name="text" type="java.lang.String" value="Net"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
+            <Component class="javax.swing.JButton" name="logobar1">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="33" green="33" red="33" type="rgb"/>
@@ -347,7 +347,7 @@
                 </Property>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton9">
+            <Component class="javax.swing.JButton" name="logobar2">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="92" green="6e" red="36" type="rgb"/>
@@ -435,7 +435,7 @@
                               <Component id="headingLogin" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="145" max="32767" attributes="0"/>
+                      <EmptySpace pref="151" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -550,7 +550,7 @@
                       <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="224" max="32767" attributes="0"/>
+                      <EmptySpace pref="218" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -954,12 +954,12 @@
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                                          <Component id="aboutUsHeading" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jPanel4" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="aboutUsPnl" alignment="0" min="-2" max="-2" attributes="0"/>
                                               <Component id="jPanel12" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
@@ -972,14 +972,14 @@
                                               <Group type="102" attributes="0">
                                                   <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="customerSupportLabel" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <EmptySpace min="38" pref="38" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
-                              <Component id="jPanel9" alignment="1" max="32767" attributes="0"/>
+                              <Component id="footerPnl" alignment="1" max="32767" attributes="0"/>
                           </Group>
                         </DimensionLayout>
                         <DimensionLayout dim="1">
@@ -987,21 +987,21 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="hero_section_pnl" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
-                                  <Component id="jLabel20" min="-2" max="-2" attributes="0"/>
+                                  <Component id="aboutUsHeading" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="aboutUsPnl" min="-2" max="-2" attributes="0"/>
                                       <Component id="jPanel11" min="-2" max="-2" attributes="0"/>
                                       <Component id="jPanel10" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Component id="jPanel13" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jPanel14" min="-2" max="-2" attributes="0"/>
+                                      <Component id="customerSupportLabel" min="-2" max="-2" attributes="0"/>
                                       <Component id="jPanel12" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="jPanel9" max="32767" attributes="0"/>
+                                  <Component id="footerPnl" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1031,7 +1031,7 @@
                                           <Component id="heroSectionjLabel2" min="-2" max="-2" attributes="0"/>
                                           <Component id="heroSectionjLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="heroSectionjLabel5" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jButton3" alignment="0" min="-2" pref="183" max="-2" attributes="0"/>
+                                          <Component id="viewPlanBtn" alignment="0" min="-2" pref="183" max="-2" attributes="0"/>
                                           <Component id="heroSectionjLabel3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace max="32767" attributes="0"/>
@@ -1060,7 +1060,7 @@
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                                               <Component id="heroSectionjLabel5" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
-                                              <Component id="jButton3" min="-2" pref="51" max="-2" attributes="0"/>
+                                              <Component id="viewPlanBtn" min="-2" pref="51" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <EmptySpace min="-2" pref="66" max="-2" attributes="0"/>
@@ -1118,7 +1118,7 @@
                                 <Property name="text" type="java.lang.String" value="exclusive offers and elevate your online experience today!"/>
                               </Properties>
                             </Component>
-                            <Component class="javax.swing.JButton" name="jButton3">
+                            <Component class="javax.swing.JButton" name="viewPlanBtn">
                               <Properties>
                                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="92" green="6e" red="36" type="rgb"/>
@@ -1135,7 +1135,7 @@
                                 </Property>
                               </Properties>
                               <Events>
-                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="viewPlanBtnActionPerformed"/>
                               </Events>
                             </Component>
                             <Component class="javax.swing.JLabel" name="ImageHeroSection">
@@ -1192,7 +1192,7 @@
                             </Container>
                           </SubComponents>
                         </Container>
-                        <Component class="javax.swing.JLabel" name="jLabel20">
+                        <Component class="javax.swing.JLabel" name="aboutUsHeading">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Tahoma" size="18" style="0"/>
@@ -1200,7 +1200,7 @@
                             <Property name="text" type="java.lang.String" value="Why SoraNet is right choice for you:"/>
                           </Properties>
                         </Component>
-                        <Container class="javax.swing.JPanel" name="jPanel4">
+                        <Container class="javax.swing.JPanel" name="aboutUsPnl">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="92" green="6e" red="36" type="rgb"/>
@@ -1247,7 +1247,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="jPanel9">
+                        <Container class="javax.swing.JPanel" name="footerPnl">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="3a" green="2c" red="15" type="rgb"/>
@@ -1267,14 +1267,13 @@
                                           <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="32767" attributes="0"/>
+                                      <EmptySpace pref="341" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
                                           <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="-2" pref="230" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="268" max="-2" attributes="0"/>
                                       <Component id="jLabel31" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
                                   </Group>
@@ -1295,8 +1294,6 @@
                                               </Group>
                                               <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
                                               <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
-                                              <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel37" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
@@ -1306,7 +1303,7 @@
                                               <Component id="jLabel27" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                             </DimensionLayout>
@@ -1376,20 +1373,6 @@
                                 </Property>
                                 <Property name="text" type="java.lang.String" value="&#xa9; 2024 Wi-Fi Subscriptions Management System. All Rights Reserved."/>
                               </Properties>
-                            </Component>
-                            <Component class="javax.swing.JLabel" name="jLabel37">
-                              <Properties>
-                                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                                </Property>
-                                <Property name="text" type="java.lang.String" value="Admin Dashboard"/>
-                                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                                  <Color id="Hand Cursor"/>
-                                </Property>
-                              </Properties>
-                              <Events>
-                                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel37MouseClicked"/>
-                              </Events>
                             </Component>
                           </SubComponents>
                         </Container>
@@ -1581,7 +1564,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="jPanel14">
+                        <Container class="javax.swing.JPanel" name="customerSupportLabel">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="92" green="6e" red="36" type="rgb"/>
@@ -1591,7 +1574,7 @@
                           <Layout>
                             <DimensionLayout dim="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <EmptySpace min="0" pref="406" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="420" max="32767" attributes="0"/>
                                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="0" pref="138" max="32767" attributes="0"/>
@@ -1623,7 +1606,7 @@
                                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                                   <Color blue="ff" green="ff" red="ff" type="rgb"/>
                                 </Property>
-                                <Property name="text" type="java.lang.String" value="Reliable Connectivity"/>
+                                <Property name="text" type="java.lang.String" value="24/7 customer support"/>
                               </Properties>
                             </Component>
                           </SubComponents>
@@ -2121,7 +2104,6 @@
                                         </Component>
                                         <Component class="javax.swing.JTextField" name="updateCustomerId">
                                           <Properties>
-                                            <Property name="editable" type="boolean" value="false"/>
                                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                               <Font name="Tahoma" size="14" style="0"/>
                                             </Property>
@@ -2129,7 +2111,6 @@
                                         </Component>
                                         <Component class="javax.swing.JTextField" name="updateCustomerName">
                                           <Properties>
-                                            <Property name="editable" type="boolean" value="false"/>
                                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                               <Font name="Tahoma" size="14" style="0"/>
                                             </Property>
@@ -2145,7 +2126,6 @@
                                         </Component>
                                         <Component class="javax.swing.JTextField" name="updatecustomerEmail">
                                           <Properties>
-                                            <Property name="editable" type="boolean" value="false"/>
                                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                               <Font name="Tahoma" size="14" style="0"/>
                                             </Property>
@@ -2161,7 +2141,6 @@
                                         </Component>
                                         <Component class="javax.swing.JTextField" name="updatePhoneNumber">
                                           <Properties>
-                                            <Property name="editable" type="boolean" value="false"/>
                                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                                               <Font name="Tahoma" size="14" style="0"/>
                                             </Property>
@@ -3680,55 +3659,6 @@
                         </Container>
                       </SubComponents>
                     </Container>
-                  </SubComponents>
-                </Container>
-                <Container class="javax.swing.JPanel" name="AdminForUserPnl">
-                  <Properties>
-                    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                    </Property>
-                    <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[1413, 793]"/>
-                    </Property>
-                    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                      <Dimension value="[1413, 793]"/>
-                    </Property>
-                  </Properties>
-                  <Constraints>
-                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                      <CardConstraints cardName="card2"/>
-                    </Constraint>
-                  </Constraints>
-
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="362" max="32767" attributes="0"/>
-                              <Component id="NotAdminMsg" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="331" max="-2" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="245" max="-2" attributes="0"/>
-                              <Component id="NotAdminMsg" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="504" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JLabel" name="NotAdminMsg">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Tahoma" size="36" style="1"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="You must be admin to access this page"/>
-                      </Properties>
-                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>

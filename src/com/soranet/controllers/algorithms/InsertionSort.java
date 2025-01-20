@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.soranet.controllers.algorithms;
 
 import com.soranet.model.CustomerModel;
@@ -19,7 +15,7 @@ public class InsertionSort {
      */
     public List<CustomerModel> sortByPrice(List<CustomerModel> customerList) {
         if (customerList == null || customerList.isEmpty()) {
-            throw new IllegalArgumentException("internetlist cannot be empty");
+            throw new IllegalArgumentException("customerList cannot be empty");
         }
 
         // Create a new list to avoid modifying the original list
@@ -44,7 +40,7 @@ public class InsertionSort {
     }
 
     /**
-     * Sorts a list of InternetModel objects by their name in ascending order.
+     * Sorts a list of CustomerModel objects by their name in ascending order.
      *
      * @param customerList The list of CustomerModel objects to be sorted.
      * @return The sorted list of CustomerModel objects.
@@ -72,7 +68,7 @@ public class InsertionSort {
     }
 
     /**
-     * Sorts a list of InternetModel objects by their ID in ascending order.
+     * Sorts a list of CustomerModel objects by their ID in ascending order.
      *
      * @param customerList The list of CustomerModel objects to be sorted.
      * @return The sorted list of CustomerModel objects.

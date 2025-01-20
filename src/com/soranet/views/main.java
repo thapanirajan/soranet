@@ -76,9 +76,9 @@ public class main extends javax.swing.JFrame {
         emailLabel = new javax.swing.JLabel();
         logoPanel1 = new javax.swing.JPanel();
         Logo2 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jButton8 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
+        logo = new javax.swing.JLabel();
+        logobar1 = new javax.swing.JButton();
+        logobar2 = new javax.swing.JButton();
         loginPnl = new javax.swing.JPanel();
         loginFormPanel = new javax.swing.JPanel();
         headingLogin = new javax.swing.JLabel();
@@ -114,14 +114,14 @@ public class main extends javax.swing.JFrame {
         heroSectionjLabel3 = new javax.swing.JLabel();
         heroSectionjLabel4 = new javax.swing.JLabel();
         heroSectionjLabel5 = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
+        viewPlanBtn = new javax.swing.JButton();
         ImageHeroSection = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        aboutUsHeading = new javax.swing.JLabel();
+        aboutUsPnl = new javax.swing.JPanel();
         jLabel21 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
+        footerPnl = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel27 = new javax.swing.JLabel();
@@ -129,7 +129,6 @@ public class main extends javax.swing.JFrame {
         jLabel29 = new javax.swing.JLabel();
         jLabel30 = new javax.swing.JLabel();
         jLabel31 = new javax.swing.JLabel();
-        jLabel37 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
@@ -138,7 +137,7 @@ public class main extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         jLabel35 = new javax.swing.JLabel();
-        jPanel14 = new javax.swing.JPanel();
+        customerSupportLabel = new javax.swing.JPanel();
         jLabel36 = new javax.swing.JLabel();
         AdminPage = new javax.swing.JPanel();
         AdminPagePnl = new javax.swing.JPanel();
@@ -237,8 +236,6 @@ public class main extends javax.swing.JFrame {
         SpeedManagePlans = new javax.swing.JLabel();
         SpeedTextField = new javax.swing.JTextField();
         ClearPlanBtn = new javax.swing.JButton();
-        AdminForUserPnl = new javax.swing.JPanel();
-        NotAdminMsg = new javax.swing.JLabel();
         PricingPage = new javax.swing.JPanel();
         pricing_page_pnl = new javax.swing.JPanel();
         PlansHeaderText = new javax.swing.JLabel();
@@ -366,19 +363,19 @@ public class main extends javax.swing.JFrame {
         Logo2.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
         Logo2.setText("Sora");
 
-        jLabel8.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(54, 110, 146));
-        jLabel8.setText("Net");
+        logo.setFont(new java.awt.Font("Arial", 1, 48)); // NOI18N
+        logo.setForeground(new java.awt.Color(54, 110, 146));
+        logo.setText("Net");
 
-        jButton8.setBackground(new java.awt.Color(51, 51, 51));
-        jButton8.setMaximumSize(new java.awt.Dimension(7, 85));
-        jButton8.setMinimumSize(new java.awt.Dimension(7, 85));
-        jButton8.setPreferredSize(new java.awt.Dimension(7, 85));
+        logobar1.setBackground(new java.awt.Color(51, 51, 51));
+        logobar1.setMaximumSize(new java.awt.Dimension(7, 85));
+        logobar1.setMinimumSize(new java.awt.Dimension(7, 85));
+        logobar1.setPreferredSize(new java.awt.Dimension(7, 85));
 
-        jButton9.setBackground(new java.awt.Color(54, 110, 146));
-        jButton9.setMaximumSize(new java.awt.Dimension(7, 85));
-        jButton9.setMinimumSize(new java.awt.Dimension(7, 85));
-        jButton9.setPreferredSize(new java.awt.Dimension(7, 85));
+        logobar2.setBackground(new java.awt.Color(54, 110, 146));
+        logobar2.setMaximumSize(new java.awt.Dimension(7, 85));
+        logobar2.setMinimumSize(new java.awt.Dimension(7, 85));
+        logobar2.setPreferredSize(new java.awt.Dimension(7, 85));
 
         javax.swing.GroupLayout logoPanel1Layout = new javax.swing.GroupLayout(logoPanel1);
         logoPanel1.setLayout(logoPanel1Layout);
@@ -386,13 +383,13 @@ public class main extends javax.swing.JFrame {
             logoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(logoPanel1Layout.createSequentialGroup()
                 .addGap(239, 239, 239)
-                .addComponent(jButton8, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logobar1, javax.swing.GroupLayout.PREFERRED_SIZE, 7, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(8, 8, 8)
                 .addComponent(Logo2)
                 .addGap(0, 0, 0)
-                .addComponent(jLabel8)
+                .addComponent(logo)
                 .addGap(8, 8, 8)
-                .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(logobar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(185, Short.MAX_VALUE))
         );
         logoPanel1Layout.setVerticalGroup(
@@ -402,13 +399,13 @@ public class main extends javax.swing.JFrame {
                     .addGroup(logoPanel1Layout.createSequentialGroup()
                         .addGap(361, 361, 361)
                         .addGroup(logoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8)
+                            .addComponent(logo)
                             .addComponent(Logo2)))
                     .addGroup(logoPanel1Layout.createSequentialGroup()
                         .addGap(343, 343, 343)
                         .addGroup(logoPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jButton8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                            .addComponent(logobar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(logobar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap(372, Short.MAX_VALUE))
         );
 
@@ -485,7 +482,7 @@ public class main extends javax.swing.JFrame {
                     .addGroup(loginFormPanelLayout.createSequentialGroup()
                         .addGap(264, 264, 264)
                         .addComponent(headingLogin)))
-                .addContainerGap(145, Short.MAX_VALUE))
+                .addContainerGap(151, Short.MAX_VALUE))
         );
         loginFormPanelLayout.setVerticalGroup(
             loginFormPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -539,7 +536,7 @@ public class main extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(8, 8, 8)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(224, Short.MAX_VALUE))
+                .addContainerGap(218, Short.MAX_VALUE))
         );
         logoPanelLayout.setVerticalGroup(
             logoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -750,14 +747,14 @@ public class main extends javax.swing.JFrame {
         heroSectionjLabel5.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         heroSectionjLabel5.setText("exclusive offers and elevate your online experience today!");
 
-        jButton3.setBackground(new java.awt.Color(54, 110, 146));
-        jButton3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton3.setForeground(new java.awt.Color(255, 255, 255));
-        jButton3.setText("View Plans");
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        viewPlanBtn.setBackground(new java.awt.Color(54, 110, 146));
+        viewPlanBtn.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        viewPlanBtn.setForeground(new java.awt.Color(255, 255, 255));
+        viewPlanBtn.setText("View Plans");
+        viewPlanBtn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        viewPlanBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                viewPlanBtnActionPerformed(evt);
             }
         });
 
@@ -799,7 +796,7 @@ public class main extends javax.swing.JFrame {
                     .addComponent(heroSectionjLabel2)
                     .addComponent(heroSectionjLabel4)
                     .addComponent(heroSectionjLabel5)
-                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(viewPlanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(heroSectionjLabel3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(ImageHeroSection, javax.swing.GroupLayout.PREFERRED_SIZE, 627, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -824,7 +821,7 @@ public class main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(heroSectionjLabel5)
                         .addGap(33, 33, 33)
-                        .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(viewPlanBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(hero_section_pnlLayout.createSequentialGroup()
                         .addGap(66, 66, 66)
                         .addComponent(ImageHeroSection)))
@@ -833,38 +830,38 @@ public class main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jLabel20.setText("Why SoraNet is right choice for you:");
+        aboutUsHeading.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        aboutUsHeading.setText("Why SoraNet is right choice for you:");
 
-        jPanel4.setBackground(new java.awt.Color(54, 110, 146));
+        aboutUsPnl.setBackground(new java.awt.Color(54, 110, 146));
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setText("Reliable Connectivity");
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout aboutUsPnlLayout = new javax.swing.GroupLayout(aboutUsPnl);
+        aboutUsPnl.setLayout(aboutUsPnlLayout);
+        aboutUsPnlLayout.setHorizontalGroup(
+            aboutUsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 406, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(aboutUsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(aboutUsPnlLayout.createSequentialGroup()
                     .addGap(0, 138, Short.MAX_VALUE)
                     .addComponent(jLabel21)
                     .addGap(0, 139, Short.MAX_VALUE)))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        aboutUsPnlLayout.setVerticalGroup(
+            aboutUsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 88, Short.MAX_VALUE)
-            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel4Layout.createSequentialGroup()
+            .addGroup(aboutUsPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(aboutUsPnlLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jLabel21)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel9.setBackground(new java.awt.Color(21, 44, 58));
-        jPanel9.setForeground(new java.awt.Color(255, 255, 255));
+        footerPnl.setBackground(new java.awt.Color(21, 44, 58));
+        footerPnl.setForeground(new java.awt.Color(255, 255, 255));
 
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("Contact Info");
@@ -894,58 +891,46 @@ public class main extends javax.swing.JFrame {
         jLabel31.setForeground(new java.awt.Color(255, 255, 255));
         jLabel31.setText("© 2024 Wi-Fi Subscriptions Management System. All Rights Reserved.");
 
-        jLabel37.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel37.setText("Admin Dashboard");
-        jLabel37.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jLabel37.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel37MouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
-        jPanel9.setLayout(jPanel9Layout);
-        jPanel9Layout.setHorizontalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
+        javax.swing.GroupLayout footerPnlLayout = new javax.swing.GroupLayout(footerPnl);
+        footerPnl.setLayout(footerPnlLayout);
+        footerPnlLayout.setHorizontalGroup(
+            footerPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(footerPnlLayout.createSequentialGroup()
                 .addGap(21, 21, 21)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(footerPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel25)
                     .addComponent(jLabel26)
                     .addComponent(jLabel27))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 341, Short.MAX_VALUE)
+                .addGroup(footerPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel30)
                     .addComponent(jLabel28)
-                    .addComponent(jLabel29)
-                    .addComponent(jLabel37))
-                .addGap(230, 230, 230)
+                    .addComponent(jLabel29))
+                .addGap(268, 268, 268)
                 .addComponent(jLabel31)
                 .addGap(142, 142, 142))
         );
-        jPanel9Layout.setVerticalGroup(
-            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel9Layout.createSequentialGroup()
+        footerPnlLayout.setVerticalGroup(
+            footerPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, footerPnlLayout.createSequentialGroup()
                 .addContainerGap(66, Short.MAX_VALUE)
-                .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+                .addGroup(footerPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(footerPnlLayout.createSequentialGroup()
                         .addGap(8, 8, 8)
                         .addComponent(jLabel28)
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(footerPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel29)
                             .addComponent(jLabel31))
                         .addGap(18, 18, 18)
-                        .addComponent(jLabel30)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel37))
-                    .addGroup(jPanel9Layout.createSequentialGroup()
+                        .addComponent(jLabel30))
+                    .addGroup(footerPnlLayout.createSequentialGroup()
                         .addComponent(jLabel25)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel26)
                         .addGap(19, 19, 19)
                         .addComponent(jLabel27)))
-                .addGap(42, 42, 42))
+                .addGap(76, 76, 76))
         );
 
         jPanel10.setBackground(new java.awt.Color(54, 110, 146));
@@ -1056,28 +1041,28 @@ public class main extends javax.swing.JFrame {
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
-        jPanel14.setBackground(new java.awt.Color(54, 110, 146));
+        customerSupportLabel.setBackground(new java.awt.Color(54, 110, 146));
 
         jLabel36.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel36.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel36.setText("Reliable Connectivity");
+        jLabel36.setText("24/7 customer support");
 
-        javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
-        jPanel14.setLayout(jPanel14Layout);
-        jPanel14Layout.setHorizontalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 406, Short.MAX_VALUE)
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
+        javax.swing.GroupLayout customerSupportLabelLayout = new javax.swing.GroupLayout(customerSupportLabel);
+        customerSupportLabel.setLayout(customerSupportLabelLayout);
+        customerSupportLabelLayout.setHorizontalGroup(
+            customerSupportLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 420, Short.MAX_VALUE)
+            .addGroup(customerSupportLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(customerSupportLabelLayout.createSequentialGroup()
                     .addGap(0, 138, Short.MAX_VALUE)
                     .addComponent(jLabel36)
                     .addGap(0, 139, Short.MAX_VALUE)))
         );
-        jPanel14Layout.setVerticalGroup(
-            jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        customerSupportLabelLayout.setVerticalGroup(
+            customerSupportLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 88, Short.MAX_VALUE)
-            .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel14Layout.createSequentialGroup()
+            .addGroup(customerSupportLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(customerSupportLabelLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
                     .addComponent(jLabel36)
                     .addGap(0, 0, Short.MAX_VALUE)))
@@ -1092,11 +1077,11 @@ public class main extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(HomePagePnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(HomePagePnlLayout.createSequentialGroup()
-                        .addComponent(jLabel20)
+                        .addComponent(aboutUsHeading)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(HomePagePnlLayout.createSequentialGroup()
                         .addGroup(HomePagePnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(aboutUsPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(74, 74, 74)
                         .addGroup(HomePagePnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1107,31 +1092,28 @@ public class main extends javax.swing.JFrame {
                             .addGroup(HomePagePnlLayout.createSequentialGroup()
                                 .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(customerSupportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(38, 38, 38))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, HomePagePnlLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 0, 0))
+            .addComponent(footerPnl, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         HomePagePnlLayout.setVerticalGroup(
             HomePagePnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(HomePagePnlLayout.createSequentialGroup()
                 .addComponent(hero_section_pnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
-                .addComponent(jLabel20)
+                .addComponent(aboutUsHeading)
                 .addGap(18, 18, 18)
                 .addGroup(HomePagePnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(aboutUsPnl, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(35, 35, 35)
                 .addGroup(HomePagePnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(customerSupportLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
-                .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(footerPnl, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(68, 68, 68))
         );
 
@@ -1289,22 +1271,18 @@ public class main extends javax.swing.JFrame {
         customerId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         customerId.setText("Customer ID : ");
 
-        updateCustomerId.setEditable(false);
         updateCustomerId.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        updateCustomerName.setEditable(false);
         updateCustomerName.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         name.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         name.setText(" Name:");
 
-        updatecustomerEmail.setEditable(false);
         updatecustomerEmail.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         email.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         email.setText("Email:");
 
-        updatePhoneNumber.setEditable(false);
         updatePhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         phone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -2340,32 +2318,6 @@ public class main extends javax.swing.JFrame {
 
         AdminPage.add(AdminPagePnl, "card3");
 
-        AdminForUserPnl.setBackground(new java.awt.Color(255, 255, 255));
-        AdminForUserPnl.setMaximumSize(new java.awt.Dimension(1413, 793));
-        AdminForUserPnl.setMinimumSize(new java.awt.Dimension(1413, 793));
-
-        NotAdminMsg.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
-        NotAdminMsg.setText("You must be admin to access this page");
-
-        javax.swing.GroupLayout AdminForUserPnlLayout = new javax.swing.GroupLayout(AdminForUserPnl);
-        AdminForUserPnl.setLayout(AdminForUserPnlLayout);
-        AdminForUserPnlLayout.setHorizontalGroup(
-            AdminForUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, AdminForUserPnlLayout.createSequentialGroup()
-                .addContainerGap(362, Short.MAX_VALUE)
-                .addComponent(NotAdminMsg)
-                .addGap(331, 331, 331))
-        );
-        AdminForUserPnlLayout.setVerticalGroup(
-            AdminForUserPnlLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(AdminForUserPnlLayout.createSequentialGroup()
-                .addGap(245, 245, 245)
-                .addComponent(NotAdminMsg)
-                .addContainerGap(504, Short.MAX_VALUE))
-        );
-
-        AdminPage.add(AdminForUserPnl, "card2");
-
         pages_container.add(AdminPage, "card5");
 
         PricingPage.setMaximumSize(new java.awt.Dimension(1471, 775));
@@ -2607,28 +2559,37 @@ public class main extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void switchMainAdminPanel(JPanel panelName) {
-        AdminPage.removeAll();
-        AdminPage.add(panelName);
-        AdminPage.repaint();
-        AdminPage.revalidate();
-    }
-
     private void loadScreen(String screenName) {
         cardLayout.show(getContentPane(), screenName);
     }
 
+    /**
+     * Initializes the layout for the JFrame and sets up the CardLayout for
+     * screen navigation. It adds different panels (Login, Sign up, and Main) to
+     * the container and sets the initial screen to the Login screen.
+     */
     private void initializeLayout() {
+        // Create an instance of CardLayout for screen navigation
         cardLayout = new java.awt.CardLayout();
         getContentPane().setLayout(cardLayout);
 
-        // adding screens
-        getContentPane().add(loginPnl, "LoginScreen");
-        getContentPane().add(signupPnl, "SingupScreen");
-        getContentPane().add(mainPnl, "MainScreen");
+        // Adding screens (panels) to the container with unique names
+        getContentPane().add(loginPnl, "LoginScreen");  // Login screen
+        getContentPane().add(signupPnl, "SingupScreen"); // Signup screen
+        getContentPane().add(mainPnl, "MainScreen");    // Main screen
+
+        // Load the initial screen (Login screen) to be displayed
         loadScreen("LoginScreen");
     }
 
+    /**
+     * Switches the displayed panel in the main navigation container. It removes
+     * all the current components from the container and adds the target panel.
+     * After that, it repaints and revalidate the container to reflect the new
+     * panel.
+     *
+     * @param targetPanel The panel to be displayed.
+     */
     private void switchNavPanels(JPanel targetPanel) {
         pages_container.removeAll();
         pages_container.add(targetPanel);
@@ -2636,16 +2597,39 @@ public class main extends javax.swing.JFrame {
         pages_container.revalidate();
     }
 
+    /**
+     * Switches the displayed panel in the admin container. It removes all the
+     * current components from the admin container and adds the specified panel.
+     * After that, it repaints and revalidate the container to reflect the new
+     * panel.
+     *
+     * @param panelName The panel to be displayed in the admin container.
+     */
     private void switchAdminPanels(JPanel panelName) {
         adminContainer.removeAll();
         adminContainer.add(panelName);
         adminContainer.repaint();
         adminContainer.revalidate();
     }
+
+    /**
+     * Event handler for the navigation menu's Home option. It switches the
+     * current displayed panel to the HomePage.
+     *
+     * @param evt The mouse event triggered by the Home navigation click.
+     */
     private void navHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navHomeMouseClicked
         switchNavPanels(HomePage);
     }//GEN-LAST:event_navHomeMouseClicked
 
+    /**
+     * Event handler for the navigation menu's Admin option. It switches the
+     * current displayed panel to the AdminPage and the admin panel to
+     * AdminHomePage. It also populates the plans table and updates statistics
+     * like customer count, user count, plan count, and earnings.
+     *
+     * @param evt The mouse event triggered by the Admin navigation click.
+     */
     private void navAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navAdminMouseClicked
         switchNavPanels(AdminPage);
         switchAdminPanels(AdminHomePage);
@@ -2654,28 +2638,37 @@ public class main extends javax.swing.JFrame {
         userCount.setText(String.valueOf(userAuth.getUserCount()));
         planCount.setText(String.valueOf(priceController.planSize()));
         earningCount.setText(String.valueOf(customerController.returnEarnings()));
-        if (userAuth.isAdmin(userAuth.getLoggedInUsername())) {
-            switchMainAdminPanel(AdminPagePnl);
-        } else {
-            switchMainAdminPanel(AdminForUserPnl);
-        }
     }//GEN-LAST:event_navAdminMouseClicked
+
 
     private void logoContainerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoContainerMouseClicked
         // TODO add your handling code here:
         switchNavPanels(HomePage);
     }//GEN-LAST:event_logoContainerMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void viewPlanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_viewPlanBtnActionPerformed
         // TODO add your handling code here:
         populatePlansTable(PricingTable);
         switchNavPanels(PricingPage);
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_viewPlanBtnActionPerformed
 
+    /**
+     * Event handler for the navigation menu's "Buy Plan" option. It populates
+     * the plans table with the pricing data, switches the displayed panel to
+     * the PricingPage, and sets the username and email inputs based on the
+     * logged-in user.
+     *
+     * @param evt The mouse event triggered by the "Buy Plan" navigation click.
+     */
     private void navBuyPlanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navBuyPlanMouseClicked
         // TODO add your handling code here:
+        // Populate the pricing table with plan data
         populatePlansTable(PricingTable);
+
+        // Switch the navigation panel to the PricingPage
         switchNavPanels(PricingPage);
+
+        // Set the username and email fields with the logged-in user's information
         UsernameUserInput.setText(userAuth.getLoggedInUsername());
         EmailUserInput.setText(userAuth.getUserByUsername(userAuth.getLoggedInUsername()).getEmail());
     }//GEN-LAST:event_navBuyPlanMouseClicked
@@ -2698,11 +2691,29 @@ public class main extends javax.swing.JFrame {
 
         try {
             if (userAuth.login(username, password)) {
+                LoggedInUser.setText(userAuth.getLoggedInUsername());
+                if (userAuth.isAdmin(username)) {
+                    navAdmin.setVisible(false);
+                    navBuyPlan.setVisible(false);
+                    navHome.setVisible(false);
+                    loadScreen("MainScreen");
+                    switchNavPanels(AdminPage);
+                    switchAdminPanels(AdminHomePage);
+                    populatePlansTable(PlansTableAdminHome);
+                    customerCount.setText(String.valueOf(customerController.returnSize()));
+                    userCount.setText(String.valueOf(userAuth.getUserCount()));
+                    planCount.setText(String.valueOf(priceController.planSize()));
+                    earningCount.setText(String.valueOf(customerController.returnEarnings()));
+                } else {
+                    navAdmin.setVisible(false);
+                    navBuyPlan.setVisible(true);
+                    navHome.setVisible(true);
+                    loadScreen("MainScreen");  // Load main screen after successful login
+                    switchNavPanels(HomePage);
+                }
                 loginUsernameField.setText("");
                 loginPasswordField.setText("");
-                LoggedInUser.setText(userAuth.getLoggedInUsername());
-                loadScreen("MainScreen");  // Load main screen after successful login
-                switchNavPanels(HomePage);
+
             } else {
                 // Show error message if login fails
                 JOptionPane.showMessageDialog(this, "Invalid username or password. Please try again.", "Login Failed", JOptionPane.WARNING_MESSAGE);
@@ -2715,10 +2726,10 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_loginBtnActionPerformed
 
     /**
-     * Method to handle the action performed when the signup button is clicked.
+     * Method to handle the action performed when the sign up button is clicked.
      * It validates user input and attempts to sign the user.
      *
-     * @param evt The event triggered when the signup button is clicked
+     * @param evt The event triggered when the sign up button is clicked
      */
     private void SignupBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SignupBtnActionPerformed
         // TODO add your handling code here:
@@ -2737,16 +2748,31 @@ public class main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Please enter a valid email address.", "Input Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
         try {
             if (userAuth.signup(username, password, signupEmail)) {
-                JOptionPane.showMessageDialog(this, "Signup successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                LoggedInUser.setText(userAuth.getLoggedInUsername());
+                if (userAuth.isAdmin(username)) {
+                    loadScreen("MainScreen");
+                    switchNavPanels(AdminPage);
+                    switchAdminPanels(AdminHomePage);
+                    navAdmin.setVisible(false);
+                    navBuyPlan.setVisible(false);
+                    navHome.setVisible(false);
+                    populatePlansTable(PlansTableAdminHome);
+                    customerCount.setText(String.valueOf(customerController.returnSize()));
+                    userCount.setText(String.valueOf(userAuth.getUserCount()));
+                    planCount.setText(String.valueOf(priceController.planSize()));
+                    earningCount.setText(String.valueOf(customerController.returnEarnings()));
+                } else {
+                    navAdmin.setVisible(false);
+                    navBuyPlan.setVisible(true);
+                    navHome.setVisible(true);
+                    loadScreen("MainScreen");
+                    switchNavPanels(HomePage);
+                }
                 signupUsernameField.setText("");
                 signupPasswordField.setText("");
                 signupEmailField.setText("");
-                loadScreen("MainScreen");
-                LoggedInUser.setText(userAuth.getLoggedInUsername());
-                switchNavPanels(HomePage);
             } else {
                 // Show error message if username already exists
                 JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.", "Signup Failed", JOptionPane.WARNING_MESSAGE);
@@ -2780,8 +2806,8 @@ public class main extends javax.swing.JFrame {
     }//GEN-LAST:event_AdminAddBtnActionPerformed
 
     /**
-     * Method to handle the action performed when a selection is made in
-     * thecombo box. It updates the plan details based on the selected option.
+     * Method to handle the action performed when a selection is made in the
+     * combo box. It updates the plan details based on the selected option.
      *
      * @param evt The event triggered when an item is selected in the combo box
      */
@@ -2808,29 +2834,56 @@ public class main extends javax.swing.JFrame {
         CustomerInternetPriceField.setText("");
     }//GEN-LAST:event_ClearBtnAdminActionPerformed
 
+    /**
+     * Event handler for the Admin Logout button. This method prompts the user
+     * to confirm if they want to log out. If the user confirms, it logs out the
+     * admin and loads the login screen. If the user cancels, a message is
+     * shown.
+     *
+     * @param evt The action event triggered by clicking the Admin Logout
+     * button.
+     */
     private void AdminLogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AdminLogoutBtnActionPerformed
         // TODO add your handling code here:
         int response = JOptionPane.showConfirmDialog(null, "Confirm logout?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
+            userAuth.logOut();
             loadScreen("LoginScreen");
         } else {
             JOptionPane.showMessageDialog(null, "Logout cancelled", "cancelled", JOptionPane.INFORMATION_MESSAGE);
         }
-
     }//GEN-LAST:event_AdminLogoutBtnActionPerformed
 
+    /**
+     * Event handler for the Logout button in the navigation menu. This method
+     * prompts the user to confirm if they want to log out. If the user
+     * confirms, it logs out the current user and loads the login screen. If the
+     * user cancels, a message is shown.
+     *
+     * @param evt The action event triggered by clicking the Logout button.
+     */
     private void LogoutNavBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutNavBtnActionPerformed
         // TODO add your handling code here:
         int response = JOptionPane.showConfirmDialog(null, "Confirm logout?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
+            userAuth.logOut();
             loadScreen("LoginScreen");
         } else {
             JOptionPane.showMessageDialog(null, "Logout cancelled", "cancelled", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_LogoutNavBtnActionPerformed
 
+    /**
+     * Event handler for the "Add Customer" button in the admin panel. This
+     * method collects the customer details from the form fields, performs
+     * validation, and attempts to add the customer to the system. If
+     * successful, it shows a success message and clears the form. If any
+     * validation fails, an error message is displayed.
+     *
+     * @param evt The action event triggered by clicking the "Add Customer"
+     * button.
+     */
     private void CustomerAddBtnAdminActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CustomerAddBtnAdminActionPerformed
-        // TODO add your handling code here:
         try {
             // Retrieve and trim inputs
             String customerName = CustomerNameField.getText().trim();
@@ -2839,8 +2892,6 @@ public class main extends javax.swing.JFrame {
             String selectedInternetPlan = (String) CustomerInternetPlanComboBox.getSelectedItem();
             String internetSpeed = CustomerInternetSpeedField.getText().trim();
             String priceInput = CustomerInternetPriceField.getText().trim();
-            
-            customerName = customerName.substring(0, 1).toUpperCase() + customerName.substring(1).toLowerCase();
 
             // Validate required fields
             if (customerName.isEmpty() || customerEmail.isEmpty() || phoneNumber.isEmpty()
@@ -2848,6 +2899,7 @@ public class main extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "Please fill all fields.", "Validation Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }
+            customerName = customerName.substring(0, 1).toUpperCase() + customerName.substring(1).toLowerCase();
 
             // Parse and validate price input
             int internetPrice;
@@ -2905,6 +2957,17 @@ public class main extends javax.swing.JFrame {
         return email.matches(emailRegex);
     }
 
+    /**
+     * Event handler for the "Update Customer Details" button in the admin
+     * panel. This method collects the updated customer details from the form
+     * fields, performs validation, and attempts to update the customer's
+     * information in the system. If successful, it shows a success message and
+     * clears the form. If any validation fails, an appropriate error message is
+     * displayed.
+     *
+     * @param evt The action event triggered by clicking the "Update Customer
+     * Details" button.
+     */
     private void UpdateCustomerDetailsBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdateCustomerDetailsBtnActionPerformed
         // TODO add your handling code here:
         try {
@@ -2971,6 +3034,17 @@ public class main extends javax.swing.JFrame {
         updateInternetSpeed.setText("");
         updatePrice.setText("");
     }
+
+    /**
+     * Event handler for the "Update Internet Plan" combo box selection change.
+     * This method updates the internet speed and price fields based on the
+     * selected plan from the combo box. It searches for the selected plan in
+     * the list of available plans, retrieves the corresponding speed and price,
+     * and populates the respective fields.
+     *
+     * @param evt The action event triggered when the selection in the combo box
+     * changes.
+     */
     private void updateInternetPlanComboboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateInternetPlanComboboxActionPerformed
         // TODO add your handling code here:
         String selectedPlan = (String) updateInternetPlanCombobox.getSelectedItem();
@@ -2984,7 +3058,15 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateInternetPlanComboboxActionPerformed
 
-
+    /**
+     * Event handler for when a row in the admin update table is clicked. This
+     * method populates the update fields with the values from the selected row
+     * in the table. It retrieves the customer details from the table and sets
+     * them into the appropriate input fields for updating the customer's
+     * information.
+     *
+     * @param evt The mouse event triggered when a row in the table is clicked.
+     */
     private void AdminUpdateTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AdminUpdateTableMouseClicked
         // TODO add your handling code here:
         DefaultTableModel tableModel = (DefaultTableModel) AdminUpdateTable.getModel();
@@ -2999,6 +3081,16 @@ public class main extends javax.swing.JFrame {
         updatePrice.setText(tableModel.getValueAt(selectedRowIndex, 6).toString());
     }//GEN-LAST:event_AdminUpdateTableMouseClicked
 
+    /**
+     * Event handler for the "Delete" button action in the Admin panel. This
+     * method handles the process of deleting a customer based on the customer
+     * ID provided in the update form. It prompts the admin to confirm the
+     * deletion, and if confirmed, it deletes the customer from the system and
+     * updates the UI accordingly.
+     *
+     * @param evt The action event triggered when the "Delete" button is
+     * clicked.
+     */
     private void DeleteBtnAdmin1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeleteBtnAdmin1ActionPerformed
         // TODO add your handling code here:
         String customerID = updateCustomerId.getText();
@@ -3061,6 +3153,16 @@ public class main extends javax.swing.JFrame {
         navAdmin.setForeground(new Color(0, 0, 0));
     }//GEN-LAST:event_navAdminMouseExited
 
+    /**
+     * Event handler for the "Add Plan" button action in the Admin panel. This
+     * method handles the process of adding a new internet plan to the system.
+     * It retrieves input values, validates them, and attempts to add the plan
+     * to the system. It also updates the UI with the new plan details if the
+     * addition is successful.
+     *
+     * @param evt The action event triggered when the "Add Plan" button is
+     * clicked.
+     */
     private void AddPlanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddPlanBtnActionPerformed
         // TODO add your handling code here:
         try {
@@ -3126,6 +3228,16 @@ public class main extends javax.swing.JFrame {
         PriceTextField.setText(tableModel.getValueAt(selectedRowIndex, 2).toString());
     }//GEN-LAST:event_PlansTableAdminHomeMouseClicked
 
+    /**
+     * Event handler for the "Update Plan" button action in the Admin panel.
+     * This method handles the process of updating an existing internet plan's
+     * details in the system. It retrieves the input values, validates them, and
+     * attempts to update the plan. If successful, it updates the plans table
+     * with the new details.
+     *
+     * @param evt The action event triggered when the "Update Plan" button is
+     * clicked.
+     */
     private void UpdatePlanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UpdatePlanBtnActionPerformed
         // TODO add your handling code here:
         try {
@@ -3138,7 +3250,7 @@ public class main extends javax.swing.JFrame {
                 return;
             }
             if (priceController.updatePlan(planName, internetSpeed, internetPrice)) {
-                JOptionPane.showMessageDialog(null, "Success", "Plan Updated Successfully", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Plan Updated Successfully", "Success", JOptionPane.INFORMATION_MESSAGE);
                 populatePlansTable(PlansTableAdminHome);
             } else {
                 JOptionPane.showMessageDialog(null, "Plan doesnot exist", "Error", JOptionPane.ERROR_MESSAGE);
@@ -3148,6 +3260,16 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_UpdatePlanBtnActionPerformed
 
+    /**
+     * Event handler for the "Delete Plan" button action in the Admin panel.
+     * This method handles the process of deleting an existing internet plan
+     * from the system. It prompts the admin to confirm the deletion and, if
+     * confirmed, attempts to delete the plan. After deletion, it refreshes the
+     * plans table to reflect the updated list.
+     *
+     * @param evt The action event triggered when the "Delete Plan" button is
+     * clicked.
+     */
     private void DeletePlanBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DeletePlanBtnActionPerformed
         // TODO add your handling code here:
         String planName = PlanNameTextField.getText().trim();
@@ -3173,6 +3295,18 @@ public class main extends javax.swing.JFrame {
         PriceUserInput.setText(tableModel.getValueAt(selectedRow, 2).toString());
     }//GEN-LAST:event_PricingTableMouseClicked
 
+    /**
+     * Event handler for the "Subscribe" button action in the user subscription
+     * process. This method handles the process of subscribing a user to an
+     * internet plan. It validates user inputs (including username, email, phone
+     * number, plan name, speed, and price), adds the user to the subscription
+     * if all inputs are valid, and provides feedback through messages. It also
+     * updates the customer table and clears the input fields after successful
+     * subscription.
+     *
+     * @param evt The action event triggered when the "Subscribe" button is
+     * clicked.
+     */
     private void SubscribeBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SubscribeBtnActionPerformed
         // TODO add your handling code here:
         try {
@@ -3236,6 +3370,7 @@ public class main extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_SubscribeBtnActionPerformed
+
     private void refreshCustomerTables() {
         populateCustomerTable(TableAdminAdd);
         populateCustomerTable(AdminUpdateTable);
@@ -3297,12 +3432,24 @@ public class main extends javax.swing.JFrame {
         // TODO add your handling code here:
         int response = JOptionPane.showConfirmDialog(null, "Confirm login?", "Confirmation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (response == JOptionPane.YES_OPTION) {
+            userAuth.logOut();
             loadScreen("LoginScreen");
         } else {
             JOptionPane.showMessageDialog(null, "Logout cancelled", "cancelled", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_LogoutNavBtnMouseClicked
 
+    /**
+     * Event handler for sorting the internet plans based on price when the user
+     * selects an option from the "Sort by Price" combo box. This method
+     * retrieves the selected sort order, applies a sorting algorithm (Selection
+     * Sort) to arrange the internet plans by price in either ascending or
+     * descending order, and then updates the displayed pricing table with the
+     * sorted list of plans.
+     *
+     * @param evt The action event triggered when the user selects a sort option
+     * from the combo box.
+     */
     private void sortPlanComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sortPlanComboBoxActionPerformed
         // TODO add your handling code here:
         String value = (String.valueOf(sortPlanComboBox.getSelectedItem()));
@@ -3319,6 +3466,16 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_sortPlanComboBoxActionPerformed
 
+    /**
+     * Event handler for sorting the customer list based on the selected
+     * criteria from the combo box ("Sort by Name", "Sort by Price", or "Sort by
+     * ID"). This method uses the Insertion Sort algorithm to sort the customer
+     * list and updates the displayed table with the sorted list based on the
+     * selected sorting option.
+     *
+     * @param evt The action event triggered when the user selects a sorting
+     * option from the combo box.
+     */
     private void ComboBoxInsertionSortActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ComboBoxInsertionSortActionPerformed
         // TODO add your handling code here:
         String value = (String.valueOf(ComboBoxInsertionSort.getSelectedItem()));
@@ -3334,15 +3491,31 @@ public class main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_ComboBoxInsertionSortActionPerformed
 
+    /**
+     * Event handler for performing a search operation based on the customer
+     * name entered in the search field. This method performs the following
+     * steps:
+     * 1. Retrieves and formats the customer name entered in the search field
+     * 2. Sorts the list of customers by name using the Insertion Sort
+     * algorithm.      
+     * 3. Performs a binary search to find the customer with the matching name.      
+     * 4. If a customer is found, it updates the table with the customer's
+     * details.      
+     * 5. If no customer is found, it displays a message indicating that no
+     * customer was found.
+     *
+     * @param evt The action event triggered when the search button is clicked.
+     */
     private void searchBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchBtnActionPerformed
-        
-        String customerName = searchTextField.getText().trim();
-        customerName = customerName.substring(0, 1).toUpperCase() + customerName.substring(1).toLowerCase();
-        List<CustomerModel> sortedList = insertionSort.sortByName(customerController.getAllCustomers());
+
+        String customerName = searchTextField.getText();
         if (customerName.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Search field cannot be empty", "Empty search field", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        customerName = customerName.substring(0, 1).toUpperCase() + customerName.substring(1).toLowerCase();
+        List<CustomerModel> sortedList = insertionSort.sortByName(customerController.getAllCustomers());
+
         CustomerModel searchedData = binarySearch.searchByName(customerName, sortedList, 0, sortedList.size() - 1);
         if (searchedData != null) {
             DefaultTableModel model = (DefaultTableModel) TableAdminAdd.getModel();
@@ -3415,11 +3588,16 @@ public class main extends javax.swing.JFrame {
         switchNavPanels(PricingPage);
     }//GEN-LAST:event_jLabel30MouseClicked
 
-    private void jLabel37MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel37MouseClicked
-        // TODO add your handling code here:
-        switchNavPanels(AdminPage);
-    }//GEN-LAST:event_jLabel37MouseClicked
-
+    
+     /**
+     * Populates the specified JTable with sorted customer data.
+     * This method clears the current table data and populates it with a fresh list of sorted customer data passed as an argument.
+     * The following steps are performed:
+     * 1. Clears the existing rows in the table.
+     * 2. Loops through each customer in the sorted list and adds their details as a new row in the table.
+     * 
+     * @param sortedList A list of sorted CustomerModel objects to be displayed in the JTable.
+     */
     private void populateInsertionSortTable(List<CustomerModel> sortedList) {
         DefaultTableModel model = (DefaultTableModel) TableAdminAdd.getModel();
         model.setRowCount(0);
@@ -3441,6 +3619,16 @@ public class main extends javax.swing.JFrame {
         return speed.matches("^\\d+\\s*Mbps$");
     }
 
+        /**
+     * Populates the specified JTable with internet plan data.
+     * This method clears the current table data and populates it with a fresh list of internet plans retrieved from the price controller.
+     * The following steps are performed:
+     * 1. Clears the existing rows in the table.
+     * 2. Retrieves the list of all internet plans from the price controller.
+     * 3. Loops through each internet plan in the list and adds its details as a new row in the table.
+     * 
+     * @param tableName The JTable to be populated with internet plan data.
+     */
     private void populatePlansTable(JTable tableName) {
         DefaultTableModel model = (DefaultTableModel) tableName.getModel();
         model.setRowCount(0);
@@ -3456,6 +3644,17 @@ public class main extends javax.swing.JFrame {
         }
     }
 
+    
+        /**
+     * Populates the specified JTable with customer data.
+     * This method clears the current table data and populates it with a fresh list of customers retrieved from the controller.
+     * The following steps are performed:
+     * 1. Clears the existing rows in the table.
+     * 2. Retrieves the list of all customers from the customer controller.
+     * 3. Loops through each customer in the list and adds their details as a new row in the table.
+     * 
+     * @param tableName The JTable to be populated with customer data.
+     */
     private void populateCustomerTable(JTable tableName) {
         DefaultTableModel model = (DefaultTableModel) tableName.getModel();
         model.setRowCount(0);
@@ -3516,7 +3715,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton AdminAddBtn;
     private javax.swing.JPanel AdminAddPage;
     private javax.swing.JScrollPane AdminAddScrollPane;
-    private javax.swing.JPanel AdminForUserPnl;
     private javax.swing.JPanel AdminHome;
     private javax.swing.JButton AdminHomeBtn;
     private javax.swing.JPanel AdminHomePage;
@@ -3563,7 +3761,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel ManagePlansAdminHome;
     private javax.swing.JLabel Name;
     private javax.swing.JPanel Navbar;
-    private javax.swing.JLabel NotAdminMsg;
     private javax.swing.JLabel PhoneNumber;
     private javax.swing.JTextField PhoneNumberUserInput;
     private javax.swing.JLabel PlanNameManagePlans;
@@ -3595,16 +3792,20 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JButton UpdateCustomerDetailsBtn;
     private javax.swing.JButton UpdatePlanBtn;
     private javax.swing.JTextField UsernameUserInput;
+    private javax.swing.JLabel aboutUsHeading;
+    private javax.swing.JPanel aboutUsPnl;
     private javax.swing.JPanel adminContainer;
     private javax.swing.JPanel adminNavpnl;
     private javax.swing.JLabel customerCount;
     private javax.swing.JLabel customerCount1;
     private javax.swing.JPanel customerCountPln;
     private javax.swing.JLabel customerId;
+    private javax.swing.JPanel customerSupportLabel;
     private javax.swing.JButton displayAllCustomer;
     private javax.swing.JLabel earningCount;
     private javax.swing.JLabel email;
     private javax.swing.JLabel emailLabel;
+    private javax.swing.JPanel footerPnl;
     private javax.swing.JLabel headingLogin;
     private javax.swing.JLabel headingSingup;
     private javax.swing.JLabel heroSectionjLabel1;
@@ -3616,14 +3817,10 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel internetPlan;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel25;
@@ -3639,22 +3836,17 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
-    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
@@ -3663,9 +3855,12 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JPasswordField loginPasswordField;
     private javax.swing.JPanel loginPnl;
     private javax.swing.JTextField loginUsernameField;
+    private javax.swing.JLabel logo;
     private javax.swing.JPanel logoContainer;
     private javax.swing.JPanel logoPanel;
     private javax.swing.JPanel logoPanel1;
+    private javax.swing.JButton logobar1;
+    private javax.swing.JButton logobar2;
     private javax.swing.JPanel mainPnl;
     private javax.swing.JLabel name;
     private javax.swing.JLabel navAdmin;
@@ -3709,5 +3904,6 @@ public class main extends javax.swing.JFrame {
     private javax.swing.JLabel userJlabel;
     private javax.swing.JLabel usernameLabel;
     private javax.swing.JLabel usernameLabel1;
+    private javax.swing.JButton viewPlanBtn;
     // End of variables declaration//GEN-END:variables
 }

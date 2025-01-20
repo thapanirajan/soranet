@@ -5,12 +5,20 @@ import java.util.List;
 import java.util.ArrayList;
 
 /**
- *
- * @author thapa
+ * This class implements the Merge Sort algorithm to sort a list of
+ * CustomerModel objects. It provides a method to sort customers by their name
+ * in ascending order.
  */
 public class MergeSort {
 
-    // Main method to sort a list of CustomerModel objects by name
+    /**
+     * Sorts a list of CustomerModel objects by their name using the Merge Sort
+     * algorithm.
+     *
+     * @param customerList The list of CustomerModel objects to be sorted.
+     * @return The sorted list of CustomerModel objects.
+     * @throws IllegalArgumentException If the input list is null or empty.
+     */
     public List<CustomerModel> sortByName(List<CustomerModel> customerList) {
         // Base case: if the list has 1 or 0 elements, it is already sorted
         if (customerList.size() <= 1) {
@@ -32,7 +40,13 @@ public class MergeSort {
         return merge(left, right);
     }
 
-    // Helper method to merge two sorted lists
+    /**
+     * Merges two sorted lists of CustomerModel objects into one sorted list.
+     *
+     * @param left The first sorted list of CustomerModel objects.
+     * @param right The second sorted list of CustomerModel objects.
+     * @return A merged list of CustomerModel objects in sorted order.
+     */
     private List<CustomerModel> merge(List<CustomerModel> left, List<CustomerModel> right) {
         List<CustomerModel> mergedList = new ArrayList<>();
         int leftIndex = 0, rightIndex = 0;
