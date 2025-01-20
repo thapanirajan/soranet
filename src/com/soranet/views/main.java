@@ -19,8 +19,8 @@ import java.awt.Color;
 import java.awt.HeadlessException;
 
 /**
- *
- * @author thapa
+ * 
+ * @author 23048609 Nirajan Thapa
  */
 public class main extends javax.swing.JFrame {
 
