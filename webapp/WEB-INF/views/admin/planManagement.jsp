@@ -299,7 +299,7 @@ h2 {
 						<c:forEach var="plan" items="${plans}">
 							<tr>
 								<td>${plan.planId}</td>
-								<td>${計劃.getPlanName()}</td>
+								<td>${plan.getPlanName()}</td>
 								<td>${plan.speed}</td>
 								<td>$${plan.price}</td>
 								<td>${plan.planDuration}</td>

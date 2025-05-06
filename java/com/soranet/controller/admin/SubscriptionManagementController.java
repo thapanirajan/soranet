@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.List;
 
 import com.soranet.model.SubscriptionModel;
@@ -54,18 +56,22 @@ public class SubscriptionManagementController extends HttpServlet {
 			int subscriptionId = Integer.parseInt(request.getParameter("subscriptionId"));
 			int userId = Integer.parseInt(request.getParameter("userId"));
 			int planId = Integer.parseInt(request.getParameter("planId"));
-			String startDate = request.getParameter("startDate");
-			String endDate = request.getParameter("endDate");
+			String startDateStr = request.getParameter("startDate");
+			String endDateStr = request.getParameter("endDate");
 
 			// Validate inputs
-			if (startDate == null || startDate.isEmpty() || endDate == null || endDate.isEmpty()) {
+			if (startDateStr == null || startDateStr.isEmpty() || endDateStr == null || endDateStr.isEmpty()) {
 				throw new IllegalArgumentException("Date fields are required");
 			}
 			if (userId <= 0 || planId <= 0) {
 				throw new IllegalArgumentException("Invalid user ID or plan ID");
 			}
 
-			SubscriptionModel subscription = new SubscriptionModel(subscriptionId, userId, planId, startDate, endDate);
+			// Parse startDate and endDate to LocalDate
+			LocalDate startDate = parseDate(startDateStr);
+			LocalDate endDate = parseDate(endDateStr);
+
+			SubscriptionModel subscription = new SubscriptionModel(subscriptionId, userId, planId, startDate, endDate, null);
 
 			boolean success = adminService.updateSubscription(subscription);
 			request.setAttribute("successMessage",
@@ -78,6 +84,9 @@ public class SubscriptionManagementController extends HttpServlet {
 		} catch (IllegalArgumentException e) {
 			request.setAttribute("errorMessage", e.getMessage());
 			doGet(request, response);
+		} catch (DateTimeParseException e) {
+			request.setAttribute("errorMessage", "Invalid date format. Please use yyyy-MM-dd.");
+			doGet(request, response);
 		} catch (Exception e) {
 			request.setAttribute("errorMessage", "Error updating subscription: " + e.getMessage());
 			doGet(request, response);
@@ -87,5 +96,10 @@ public class SubscriptionManagementController extends HttpServlet {
 	private boolean isAdmin(HttpServletRequest request) {
 		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
 		return user != null && "admin".equalsIgnoreCase(user.getRole());
+	}
+
+	// Helper method to parse date string to LocalDate
+	private LocalDate parseDate(String dateStr) throws DateTimeParseException {
+		return LocalDate.parse(dateStr);
 	}
 }

@@ -14,11 +14,13 @@
 
         body {
             font-family: Arial, sans-serif;
+
         }
 
         .container-dash {
+        
             display: flex;
-            min-height: 100vh;
+            max-height: 100vh;
         }
 
         .admin-nav {
@@ -80,7 +82,7 @@
         <%-- Admin Nav --%>
         <div class="admin-nav">
             <div class="admin-title">
-                <h2>SoraNet Admin</h2>
+                <h1>SoraNet Admin</h1>
                 <p>${sessionScope.user.getUsername()}</p>
             </div>
             <div class="admin-nav-links">

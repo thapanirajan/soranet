@@ -17,16 +17,24 @@
 body {
 	font-family: Arial, sans-serif;
 	background-color: #f8f9fa;
+	display: flex;
+}
+
+div {
+	border: 1px solid black;
 }
 
 .container-dash {
 	display: flex;
-	min-height: 100vh;
+	max-height: 100dvh;
+	overflow: auto;
 }
 
 .dashboard-container {
 	flex-grow: 1;
 	padding: 2rem;
+	max-height: 100dvh;
+	overflow: auto;
 }
 
 h2 {
@@ -227,90 +235,88 @@ h2 {
 </style>
 </head>
 <body>
-	<div class="container-dash">
-		<%@ include file="/WEB-INF/views/components/adminNav.jsp"%>
-		<div class="dashboard-container">
-			<h2>User Management</h2>
+	<%@ include file="/WEB-INF/views/components/adminNav.jsp"%>
+	<div class="dashboard-container">
+		<h2>User Management</h2>
 
-			<c:if test="${not empty successMessage}">
-				<div class="alert alert-success">
-					${successMessage}
-					<button class="alert-close"
-						onclick="this.parentElement.style.display='none'">×</button>
-				</div>
-			</c:if>
-			<c:if test="${not empty errorMessage}">
-				<div class="alert alert-error">
-					${errorMessage}
-					<button class="alert-close"
-						onclick="this.parentElement.style.display='none'">×</button>
-				</div>
-			</c:if>
-
-			<div class="search-bar">
-				<input type="text" id="searchInput"
-					placeholder="Search by name or email..." oninput="filterUsers()">
+		<c:if test="${not empty successMessage}">
+			<div class="alert alert-success">
+				${successMessage}
+				<button class="alert-close"
+					onclick="this.parentElement.style.display='none'">×</button>
 			</div>
+		</c:if>
+		<c:if test="${not empty errorMessage}">
+			<div class="alert alert-error">
+				${errorMessage}
+				<button class="alert-close"
+					onclick="this.parentElement.style.display='none'">×</button>
+			</div>
+		</c:if>
 
-			<div class="table-container">
-				<table class="table" id="usersTable">
-					<thead>
+		<div class="search-bar">
+			<input type="text" id="searchInput"
+				placeholder="Search by name or email..." oninput="filterUsers()">
+		</div>
+
+		<div class="table-container">
+			<table class="table" id="usersTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Role</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach var="user" items="${users}">
 						<tr>
-							<th>ID</th>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Role</th>
-							<th>Actions</th>
+							<td>${user.userId}</td>
+							<td>${user.firstName}${user.lastName}</td>
+							<td>${user.email}</td>
+							<td>${user.role}</td>
+							<td class="action-buttons">
+								<button
+									onclick="openEditModal(${user.userId}, '${user.firstName} ${user.lastName}', '${user.role}')">
+									Edit Role</button>
+							</td>
 						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="user" items="${users}">
-							<tr>
-								<td>${user.userId}</td>
-								<td>${user.firstName}${user.lastName}</td>
-								<td>${user.email}</td>
-								<td>${user.role}</td>
-								<td class="action-buttons">
-									<button
-										onclick="openEditModal(${user.userId}, '${user.firstName} ${user.lastName}', '${user.role}')">
-										Edit Role</button>
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
-			</div>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
 
-			<div class="modal" id="editRoleModal">
-				<div class="modal-content">
-					<div class="modal-header">
-						<h3>Edit User Role</h3>
-						<button class="modal-close" onclick="closeEditModal()">×</button>
-					</div>
-					<form id="editRoleForm"
-						action="${pageContext.request.contextPath}/admin/users"
-						method="post">
-						<div class="modal-body">
-							<input type="hidden" name="userId" id="modalUserId">
-							<div>
-								<label for="modalUserName">User Name</label> <input type="text"
-									id="modalUserName" readonly>
-							</div>
-							<div>
-								<label for="modalUserRole">Role</label> <select name="role"
-									id="modalUserRole" required>
-									<option value="customer">Customer</option>
-									<option value="admin">Admin</option>
-								</select>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn-secondary"
-								onclick="closeEditModal()">Close</button>
-							<button type="submit" class="btn-primary">Save Changes</button>
-						</div>
-					</form>
+		<div class="modal" id="editRoleModal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3>Edit User Role</h3>
+					<button class="modal-close" onclick="closeEditModal()">×</button>
 				</div>
+				<form id="editRoleForm"
+					action="${pageContext.request.contextPath}/admin/users"
+					method="post">
+					<div class="modal-body">
+						<input type="hidden" name="userId" id="modalUserId">
+						<div>
+							<label for="modalUserName">User Name</label> <input type="text"
+								id="modalUserName" readonly>
+						</div>
+						<div>
+							<label for="modalUserRole">Role</label> <select name="role"
+								id="modalUserRole" required>
+								<option value="customer">Customer</option>
+								<option value="admin">Admin</option>
+							</select>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn-secondary"
+							onclick="closeEditModal()">Close</button>
+						<button type="submit" class="btn-primary">Save Changes</button>
+					</div>
+				</form>
 			</div>
 		</div>
 	</div>

@@ -6,10 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import com.soranet.model.InternetPlanModel;
+import com.soranet.model.PlanModel;
 import com.soranet.model.UserModel;
 import com.soranet.service.AdminService;
 import com.soranet.util.SessionUtil;
@@ -47,7 +48,7 @@ public class PlanManagementController extends HttpServlet {
 		}
 
 		try {
-			List<InternetPlanModel> plans = adminService.getAllPlans();
+			List<PlanModel> plans = adminService.getAllPlans();
 			request.setAttribute("plans", plans);
 			request.getRequestDispatcher("/WEB-INF/views/admin/planManagement.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -93,9 +94,14 @@ public class PlanManagementController extends HttpServlet {
 				throw new IllegalArgumentException("Invalid plan type");
 			}
 
-			InternetPlanModel plan = new InternetPlanModel(planId, planName, speed, price, planDuration,
-					planDescription, type, features, popular);
-
+			/*
+			 * public PlanModel(int planId, String planName, String speed, BigDecimal price,
+			 * int planDuration, String planDescription, String type, boolean popular,
+			 * String features, LocalDateTime createdAt) {
+			 */
+			PlanModel plan = new PlanModel(planId, planName, speed, price, planDuration,
+			        planDescription, type, popular, features, LocalDateTime.now());
+			
 			boolean success;
 			if (planId == 0) {
 				success = adminService.createInternetPlan(plan);

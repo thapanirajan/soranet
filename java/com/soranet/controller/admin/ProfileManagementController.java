@@ -17,12 +17,6 @@ import com.soranet.util.SessionUtil;
 @WebServlet(asyncSupported = true, urlPatterns = { "/admin/profile" })
 public class ProfileManagementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AuthService authService;
-
-	@Override
-	public void init() throws ServletException {
-		authService = new AuthService();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -62,10 +56,10 @@ public class ProfileManagementController extends HttpServlet {
 				throw new IllegalArgumentException("Invalid email format");
 			}
 
-			authService.updateUser(username, firstName, lastName, phoneNumber, address, city, user.getProfilePicture());
+			AuthService.updateUser(username, firstName, lastName, phoneNumber, address, city, user.getProfilePicture());
 
 			// Update session user
-			UserModel updatedUser = authService.getUserByUsername(username);
+			UserModel updatedUser = AuthService.getUserByUsername(username);
 			SessionUtil.setAttribute(request, "user", updatedUser);
 
 			request.setAttribute("successMessage", "Profile updated successfully");

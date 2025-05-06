@@ -1,14 +1,18 @@
 package com.soranet.model;
 
-public class PaymentModel {
-	private int paymentId; // PK
-	// Foreign Key
-	private int subscriptionId; // FK
-	private double amount;
-	private String paymentDate;
-	private String paymentMethod;
 
-	public PaymentModel(int paymentId, int subscriptionId, double amount, String paymentDate, String paymentMethod) {
+import java.time.LocalDateTime;
+
+public class PaymentModel {
+	private int paymentId;
+	private int subscriptionId;
+	private double amount;
+	private LocalDateTime paymentDate;
+	private String paymentMethod; // credit, paypal, bank
+
+	
+	public PaymentModel(int paymentId, int subscriptionId, double amount, LocalDateTime paymentDate,
+			String paymentMethod) {
 		super();
 		this.paymentId = paymentId;
 		this.subscriptionId = subscriptionId;
@@ -17,6 +21,7 @@ public class PaymentModel {
 		this.paymentMethod = paymentMethod;
 	}
 
+	// Getters and Setters
 	public int getPaymentId() {
 		return paymentId;
 	}
@@ -24,6 +29,7 @@ public class PaymentModel {
 	public void setPaymentId(int paymentId) {
 		this.paymentId = paymentId;
 	}
+
 
 	public int getSubscriptionId() {
 		return subscriptionId;
@@ -41,11 +47,11 @@ public class PaymentModel {
 		this.amount = amount;
 	}
 
-	public String getPaymentDate() {
+	public LocalDateTime getPaymentDate() {
 		return paymentDate;
 	}
 
-	public void setPaymentDate(String paymentDate) {
+	public void setPaymentDate(LocalDateTime paymentDate) {
 		this.paymentDate = paymentDate;
 	}
 
@@ -56,5 +62,4 @@ public class PaymentModel {
 	public void setPaymentMethod(String paymentMethod) {
 		this.paymentMethod = paymentMethod;
 	}
-
 }

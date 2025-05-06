@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="com.soranet.model.UserModel"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -126,6 +127,10 @@ small {
 </style>
 </head>
 <body>
+	<%
+	UserModel user = (UserModel) request.getAttribute("user");
+	String loginId = (user != null) ? user.getUsername() : "";
+	%>
 	<div class="header">
 		<a class="logo" href="${pageContext.request.contextPath}/">SoraNet</a>
 		<div class="signup-link">
@@ -140,7 +145,8 @@ small {
 				class="login-form" id="loginForm">
 				<div class="input-group">
 					<input type="text" name="loginId" id="email"
-						placeholder="email or username" class="input-field" required>
+						placeholder="email or username" value="<%=loginId%>"
+						class="input-field" required>
 					<div class="underline"></div>
 				</div>
 				<div class="input-group">

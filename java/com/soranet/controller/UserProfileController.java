@@ -19,7 +19,6 @@ import com.soranet.util.ValidationUtil;
 @WebServlet(asyncSupported = true, urlPatterns = { "/user/profile" })
 public class UserProfileController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AuthService userService;
 	private ImageUtil imageUtil;
 	private static final String SAVE_FOLDER = "Uploads";
 
@@ -29,7 +28,6 @@ public class UserProfileController extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		userService = new AuthService();
 		imageUtil = new ImageUtil();
 	}
 
@@ -46,7 +44,7 @@ public class UserProfileController extends HttpServlet {
 
 		try {
 			String username = user.getUsername();
-			UserModel userData = userService.getUserByUsername(username);
+			UserModel userData = AuthService.getUserByUsername(username);
 			if (userData == null) {
 				request.setAttribute("message", "User not found.");
 				request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
@@ -84,7 +82,7 @@ public class UserProfileController extends HttpServlet {
 			if (ValidationUtil.isNullOrEmpty(firstName) || ValidationUtil.isNullOrEmpty(lastName)
 					|| ValidationUtil.isNullOrEmpty(email) || ValidationUtil.isNullOrEmpty(phoneNumber)) {
 				request.setAttribute("message", "Please fill in all required fields.");
-				UserModel userData = userService.getUserByUsername(username);
+				UserModel userData = AuthService.getUserByUsername(username);
 				request.setAttribute("user", userData);
 				request.getRequestDispatcher("/WEB-INF/views/customer/profileManagement.jsp").forward(request,
 						response);
@@ -94,7 +92,7 @@ public class UserProfileController extends HttpServlet {
 			// Validate firstName and lastName (must be alphabetic)
 			if (!ValidationUtil.isAlphabetic(firstName)) {
 				request.setAttribute("message", "First name must contain only letters.");
-				UserModel userData = userService.getUserByUsername(username);
+				UserModel userData = AuthService.getUserByUsername(username);
 				request.setAttribute("user", userData);
 				request.getRequestDispatcher("/WEB-INF/views/customer/profileManagement.jsp").forward(request,
 						response);
@@ -103,7 +101,7 @@ public class UserProfileController extends HttpServlet {
 
 			if (!ValidationUtil.isAlphabetic(lastName)) {
 				request.setAttribute("message", "Last name must contain only letters.");
-				UserModel userData = userService.getUserByUsername(username);
+				UserModel userData = AuthService.getUserByUsername(username);
 				request.setAttribute("user", userData);
 				request.getRequestDispatcher("/WEB-INF/views/customer/profileManagement.jsp").forward(request,
 						response);
@@ -113,7 +111,7 @@ public class UserProfileController extends HttpServlet {
 			// Validate phone number (must start with 98 and be 10 digits)
 			if (!ValidationUtil.isValidPhoneNumber(phoneNumber)) {
 				request.setAttribute("message", "Phone number must start with 98 and be exactly 10 digits.");
-				UserModel userData = userService.getUserByUsername(username);
+				UserModel userData = AuthService.getUserByUsername(username);
 				request.setAttribute("user", userData);
 				request.getRequestDispatcher("/WEB-INF/views/customer/profileManagement.jsp").forward(request,
 						response);
@@ -123,7 +121,7 @@ public class UserProfileController extends HttpServlet {
 			// Validate email format
 			if (!ValidationUtil.isValidEmail(email)) {
 				request.setAttribute("message", "Invalid email format.");
-				UserModel userData = userService.getUserByUsername(username);
+				UserModel userData = AuthService.getUserByUsername(username);
 				request.setAttribute("user", userData);
 				request.getRequestDispatcher("/WEB-INF/views/customer/profileManagement.jsp").forward(request,
 						response);
@@ -131,10 +129,10 @@ public class UserProfileController extends HttpServlet {
 			}
 
 			// Check if email is already in use by another user
-			UserModel existingUser = userService.getUserByLoginId(email);
+			UserModel existingUser = AuthService.getUserByLoginId(email);
 			if (existingUser != null && !existingUser.getUsername().equals(username)) {
 				request.setAttribute("message", "Email is already in use by another user.");
-				UserModel userData = userService.getUserByUsername(username);
+				UserModel userData = AuthService.getUserByUsername(username);
 				request.setAttribute("user", userData);
 				request.getRequestDispatcher("/WEB-INF/views/customer/profileManagement.jsp").forward(request,
 						response);
@@ -142,7 +140,7 @@ public class UserProfileController extends HttpServlet {
 			}
 
 			// Handle profile picture upload
-			UserModel currentUser = userService.getUserByUsername(username);
+			UserModel currentUser = AuthService.getUserByUsername(username);
 			if (profilePicturePart != null && profilePicturePart.getSize() > 0) {
 				// Validate file type
 				if (!ValidationUtil.isValidImageExtension(profilePicturePart)) {
@@ -198,10 +196,10 @@ public class UserProfileController extends HttpServlet {
 			}
 
 			// Update user details in the database
-			userService.updateUser(username, firstName, lastName, phoneNumber, address, city, profilePicture);
+			AuthService.updateUser(username, firstName, lastName, phoneNumber, address, city, profilePicture);
 
 			// Refresh user data and show success message
-			UserModel updatedUser = userService.getUserByUsername(username);
+			UserModel updatedUser = AuthService.getUserByUsername(username);
 			SessionUtil.setAttribute(request, "user", updatedUser);
 			request.setAttribute("message", "Profile updated successfully.");
 			request.setAttribute("user", updatedUser);
@@ -209,7 +207,7 @@ public class UserProfileController extends HttpServlet {
 		} catch (Exception e) {
 			request.setAttribute("message", "Error updating profile: " + e.getMessage());
 			try {
-				UserModel userData = userService.getUserByUsername(user.getUsername());
+				UserModel userData = AuthService.getUserByUsername(user.getUsername());
 				request.setAttribute("user", userData);
 			} catch (Exception ex) {
 				request.setAttribute("message", "Error loading profile: " + ex.getMessage());

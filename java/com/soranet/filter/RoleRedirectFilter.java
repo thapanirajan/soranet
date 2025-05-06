@@ -13,7 +13,7 @@ import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebFilter({ "/login", "/register" })
+@WebFilter({ "/login" })
 public class RoleRedirectFilter implements jakarta.servlet.Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
@@ -32,12 +32,15 @@ public class RoleRedirectFilter implements jakarta.servlet.Filter {
 		chain.doFilter(request, response);
 	}
 
-	// determine redirect path accordign to the role of the user
+	// determine redirect path according to the role of the user
 	private String determineRedirectPath(String role) {
+		if (role == null) {
+			throw new IllegalArgumentException("Role cannot be null");
+		}
 		return switch (role.toLowerCase()) {
 		case "admin" -> "/admin/dashboard";
 		case "customer" -> "/";
-		default -> throw new IllegalArgumentException("Unexpected value: " + role.toLowerCase());
+		default -> throw new IllegalArgumentException("Unknown role:  " + role.toLowerCase());
 		};
 	}
 }

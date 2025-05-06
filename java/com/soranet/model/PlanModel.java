@@ -1,21 +1,23 @@
 package com.soranet.model;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 
-public class InternetPlanModel {
-	private int planId; // PK
+public class PlanModel {
+	private int planId;
 	private String planName;
 	private String speed;
 	private double price;
 	private String planDuration;
 	private String planDescription;
-	private String type; // "residential" or "business"
-	private List<String> features; // List of feature descriptions
+	private String type; // Residential, Business
 	private boolean popular;
+	private List<String> features;
+	private LocalDateTime createdAt;
 
-	public InternetPlanModel(int planId, String planName, String speed, double price, String planDuration,
-			String planDescription, String type, List<String> features, boolean popular) {
-		super();
+	public PlanModel(int planId, String planName, String speed, double price, String planDuration,
+			String planDescription, String type, boolean popular, List<String> features, LocalDateTime createdAt) {
 		this.planId = planId;
 		this.planName = planName;
 		this.speed = speed;
@@ -23,8 +25,9 @@ public class InternetPlanModel {
 		this.planDuration = planDuration;
 		this.planDescription = planDescription;
 		this.type = type;
-		this.features = features;
 		this.popular = popular;
+		this.features = features;
+		this.createdAt = createdAt;
 	}
 
 	public int getPlanId() {
@@ -83,6 +86,14 @@ public class InternetPlanModel {
 		this.type = type;
 	}
 
+	public boolean isPopular() {
+		return popular;
+	}
+
+	public void setPopular(boolean popular) {
+		this.popular = popular;
+	}
+
 	public List<String> getFeatures() {
 		return features;
 	}
@@ -91,11 +102,12 @@ public class InternetPlanModel {
 		this.features = features;
 	}
 
-	public boolean isPopular() {
-		return popular;
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
 	}
 
-	public void setPopular(boolean popular) {
-		this.popular = popular;
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
 	}
+
 }

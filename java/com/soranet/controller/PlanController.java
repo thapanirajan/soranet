@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import com.soranet.model.InternetPlanModel;
+import com.soranet.model.PlanModel;
 import com.soranet.service.CustomerPageService;
 
 /**
@@ -17,12 +17,6 @@ import com.soranet.service.CustomerPageService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/plan" })
 public class PlanController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CustomerPageService planService;
-
-	@Override
-	public void init() throws ServletException {
-		planService = new CustomerPageService();
-	}
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -37,8 +31,8 @@ public class PlanController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<InternetPlanModel> residentialPlans = planService.getPlansByType("residential");
-		List<InternetPlanModel> businessPlans = planService.getPlansByType("business");
+		List<PlanModel> residentialPlans = CustomerPageService.getPlansByType("residential");
+		List<PlanModel> businessPlans = CustomerPageService.getPlansByType("business");
 		
 		request.setAttribute("residentialPlans", residentialPlans);
         request.setAttribute("businessPlans", businessPlans);

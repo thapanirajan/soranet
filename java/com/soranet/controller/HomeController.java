@@ -8,7 +8,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-import com.soranet.model.InternetPlanModel;
+import com.soranet.model.PlanModel;
 import com.soranet.service.CustomerPageService;
 
 /**
@@ -17,7 +17,6 @@ import com.soranet.service.CustomerPageService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/" })
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private CustomerPageService planService = new CustomerPageService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -33,7 +32,7 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<InternetPlanModel> residentialPlans = planService.getPlansByType("residential");
+		List<PlanModel> residentialPlans = CustomerPageService.getPlansByType("residential");
 		request.setAttribute("residentialPlans", residentialPlans);
 		request.getRequestDispatcher("/WEB-INF/views/customer/index.jsp").forward(request, response);
 	}

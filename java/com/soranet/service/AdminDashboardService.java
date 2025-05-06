@@ -13,21 +13,6 @@ public class AdminDashboardService {
 		try {
 			// User Statistics
 			dashboardData.put("totalUsers", dashboardStats.getTotalUsers());
-			dashboardData.put("newUsers", dashboardStats.getNewUsersThisMonth());
-
-			// Subscription Data
-			dashboardData.put("activeSubs", dashboardStats.getActiveSubscriptions());
-			dashboardData.put("expiringSubs", dashboardStats.getExpiringSubscriptions());
-
-			// Revenue Data
-			dashboardData.put("totalRevenue", dashboardStats.getTotalRevenue());
-			dashboardData.put("monthlyRevenue", dashboardStats.getCurrentMonthRevenue());
-
-			// Plan Popularity
-			dashboardData.put("popularPlans", dashboardStats.getPopularPlans());
-
-			dashboardData.put("revenueHistory", dashboardStats.getMonthlyRevenueHistory());
-
 		} catch (SQLException e) {
 			// Handle exception
 		}

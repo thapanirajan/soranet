@@ -9,11 +9,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.Part;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+/*import java.util.Random;*/
 
 import com.soranet.model.UserModel;
 import com.soranet.service.AuthService;
+import com.soranet.util.CookieUtil;
 import com.soranet.util.PasswordUtil;
 import com.soranet.util.SessionUtil;
+import com.soranet.util.ValidationUtil;
 
 /**
  * Servlet implementation class RegisterController
@@ -23,21 +27,12 @@ import com.soranet.util.SessionUtil;
 public class RegisterController extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private AuthService authService;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
 	public RegisterController() {
 		super();
-	}
-
-	/**
-	 * Initializes the servlet and creates an instance of RegisterService.
-	 */
-	@Override
-	public void init() throws ServletException {
-		authService = new AuthService();
 	}
 
 	/**
@@ -61,7 +56,7 @@ public class RegisterController extends HttpServlet {
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
 			String phoneNumber = request.getParameter("phoneNumber");
-			String role = request.getParameter("role");
+			/* String role = request.getParameter("role"); */
 			String username = request.getParameter("username");
 			String address = request.getParameter("address");
 			String city = request.getParameter("city");
@@ -72,32 +67,72 @@ public class RegisterController extends HttpServlet {
 					? profilePicturePart.getSubmittedFileName()
 					: null;
 
-			// Validate password and confirm_password match
-			if (!password.equals(confirmPassword)) {
-				request.setAttribute("message", "Passwords do not match.");
+			// Initialize error message
+			String errorMessage = null;
+
+			// Validate for null or empty fields using ValidationUtil
+			if (ValidationUtil.isNullOrEmpty(firstName)) {
+				errorMessage = "First name is required.";
+			} else if (ValidationUtil.isNullOrEmpty(lastName)) {
+				errorMessage = "Last name is required.";
+			} else if (ValidationUtil.isNullOrEmpty(email)) {
+				errorMessage = "Email is required.";
+			} else if (!ValidationUtil.isValidEmail(email)) {
+				errorMessage = "Invalid email format.";
+			} else if (ValidationUtil.isNullOrEmpty(phoneNumber)) {
+				errorMessage = "Phone number is required.";
+			} else if (!ValidationUtil.isValidPhoneNumber(phoneNumber)) {
+				errorMessage = "Phone number must be 10 digits starting with 98.";
+			} else if (ValidationUtil.isNullOrEmpty(username)) {
+				errorMessage = "Username is required.";
+			} else if (!ValidationUtil.isAlphanumericStartingWithLetter(username)) {
+				errorMessage = "Username must start with a letter and contain only letters and numbers.";
+			} else if (ValidationUtil.isNullOrEmpty(address)) {
+				errorMessage = "Address is required.";
+			} else if (ValidationUtil.isNullOrEmpty(city)) {
+				errorMessage = "City is required.";
+			} else if (ValidationUtil.isNullOrEmpty(password)) {
+				errorMessage = "Password is required.";
+			} else if (!ValidationUtil.isValidPassword(password)) {
+				errorMessage = "Password must be at least 8 characters, with 1 capital letter, 1 number, and 1 symbol.";
+			} else if (!ValidationUtil.doPasswordsMatch(password, confirmPassword)) {
+				errorMessage = "Passwords do not match.";
+			} else if (profilePicturePart != null && profilePicturePart.getSize() > 0
+					&& !ValidationUtil.isValidImageExtension(profilePicturePart)) {
+				errorMessage = "Profile picture must be a JPG, JPEG, PNG, or GIF file.";
+			}
+
+			// If validation fails, forward back to the registration page with error message
+			if (errorMessage != null) {
+				request.setAttribute("message", errorMessage);
 				request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
 				return;
 			}
 
-			// Validate phone number (must be exactly 10 digits)
-			if (phoneNumber == null || !phoneNumber.matches("\\d{10}")) {
-				request.setAttribute("message", "Phone number must be exactly 10 digits.");
-				request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
-				return;
-			}
+			/*
+			 * Random rand = new Random(); int userId = 10000 + rand.nextInt(90000);
+			 */
 
 			// Hash the password
 			String hashedPassword = PasswordUtil.hashPassword(password);
 
 			// Create UserModel object
-			UserModel user = new UserModel(0, firstName, lastName, email, phoneNumber, username, hashedPassword, role,
-					address, city, profilePicture);
+			UserModel user = new UserModel(0, username, hashedPassword, "customer", firstName, lastName, email,
+					phoneNumber, address, city, profilePicture, LocalDateTime.now(), null);
 
 			// Save user via RegisterService
-			authService.registerUser(user);
+			AuthService.registerUser(user);
 
-			// Store username in session
+			System.out.println("User ID after createUser: " + user.getUserId());
+
+			int expiryDays = 1;
+			String token = AuthService.generateAndStoreToken(user.getUserId(), expiryDays);
+
+			CookieUtil.addCookie(response, "authToken", token, expiryDays * 24 * 60 * 60);
+
 			SessionUtil.setAttribute(request, "user", user);
+
+			response.sendRedirect(request.getContextPath() + "/login");
 
 		} catch (Exception e) {
 			request.setAttribute("message", "Registration failed: " + e.getMessage());
