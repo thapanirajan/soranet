@@ -6,7 +6,7 @@ public class UserModel {
 	private int userId;
 	private String username;
 	private String password;
-	private String role; 
+	private String role;
 	private String firstName;
 	private String lastName;
 	private String email;
@@ -35,6 +35,16 @@ public class UserModel {
 		this.createdAt = createdAt;
 		this.updatedAt = updatedAt;
 	}
+
+	// Constructor for creating new users (omits profilePicture, createdAt,
+	// updatedAt)
+	public UserModel(int userId, String username, String password, String role, String firstName, String lastName,
+			String email, String phoneNumber, String address, String city) {
+		this(userId, username, password, role, firstName, lastName, email, phoneNumber, address, city, null, null,
+				null);
+	}
+	
+	public UserModel() {}
 
 	public int getUserId() {
 		return userId;

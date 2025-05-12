@@ -6,10 +6,11 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import com.soranet.model.PlanModel;
-import com.soranet.service.CustomerPageService;
+import com.soranet.service.plan.PlanService;
 
 /**
  * Servlet implementation class HomeController
@@ -17,6 +18,7 @@ import com.soranet.service.CustomerPageService;
 @WebServlet(asyncSupported = true, urlPatterns = { "/" })
 public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	PlanService planService = new PlanService();
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -32,9 +34,16 @@ public class HomeController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		List<PlanModel> residentialPlans = CustomerPageService.getPlansByType("residential");
-		request.setAttribute("residentialPlans", residentialPlans);
-		request.getRequestDispatcher("/WEB-INF/views/customer/index.jsp").forward(request, response);
+		List<PlanModel> residentialPlans;
+		try {
+			residentialPlans = planService.getPlansByType("residential");
+			request.setAttribute("residentialPlans", residentialPlans);
+			request.getRequestDispatcher("/WEB-INF/views/customer/index.jsp").forward(request, response);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

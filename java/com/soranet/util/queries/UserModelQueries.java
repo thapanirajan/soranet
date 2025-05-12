@@ -20,7 +20,7 @@ public class UserModelQueries {
         "WHERE UserId = ?";
     
     public static final String DELETE_USER = 
-        "DELETE FROM User WHERE UserId = ?";
+        "DELETE FROM Users WHERE UserId = ?";
     
     public static final String COUNT_TOTAL_USERS = 
         "SELECT COUNT(*) AS total_users FROM User";

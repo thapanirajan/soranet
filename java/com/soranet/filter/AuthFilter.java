@@ -1,40 +1,3 @@
-//package com.soranet.filter;
-//
-//import java.io.IOException;
-//
-//import com.soranet.model.UserModel;
-//import com.soranet.util.SessionUtil;
-//
-//import jakarta.servlet.FilterChain;
-//import jakarta.servlet.ServletException;
-//import jakarta.servlet.ServletRequest;
-//import jakarta.servlet.ServletResponse;
-//import jakarta.servlet.annotation.WebFilter;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-//
-//@WebFilter(urlPatterns = { "/admin/*", "/payment/*" })
-//public class AuthFilter {
-//	private static final String Login_page = "/WEB-INF/views/customer/login.jsp";
-//
-//	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-//			throws IOException, ServletException {
-//		HttpServletRequest httpRequest = (HttpServletRequest) request;
-//		HttpServletResponse httpResponse = (HttpServletResponse) response;
-//
-//		// Get user from session
-//		UserModel user = (UserModel) SessionUtil.getAttribute(httpRequest, "user");
-//
-//		if (user == null) {
-//			// Redirect to login page
-//			httpResponse.sendRedirect(httpRequest.getContextPath() + Login_page);
-//			return;
-//		}
-//		// User is authenticated, proceed with request
-//		chain.doFilter(request, response);
-//	}
-//
-//}
 
 package com.soranet.filter;
 
@@ -48,33 +11,44 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
-@WebFilter(urlPatterns = { "/admin/*", "/payment/*","/user/profile" })
+@WebFilter(urlPatterns = { "/admin/*", "/payment/*", "/user/profile" })
 public class AuthFilter implements Filter {
 
 	@Override
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-			throws IOException, ServletException {
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-		HttpServletResponse httpResponse = (HttpServletResponse) response;
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest httpRequest = (HttpServletRequest) request;
+        HttpServletResponse httpResponse = (HttpServletResponse) response;
 
-		// Get user from session
-		UserModel user = (UserModel) SessionUtil.getAttribute(httpRequest, "user");
+        // Get user from session
+        UserModel user = (UserModel) SessionUtil.getAttribute(httpRequest, "user");
 
-		if (user == null) {
-			String requestedUrl = httpRequest.getRequestURI();
-			if (httpRequest.getQueryString() != null) {
-				requestedUrl += "?" + httpRequest.getQueryString();
-			}
-			SessionUtil.setAttribute(httpRequest, "redirectUrl", requestedUrl);
+        // Log user details for debugging
+        String requestedUrl = httpRequest.getRequestURI();
+        if (httpRequest.getQueryString() != null) {
+            requestedUrl += "?" + httpRequest.getQueryString();
+        }
+        System.out.println("AuthFilter: Requested URL: " + requestedUrl + ", User: " + (user != null ? user.getUsername() + ", Role: " + user.getRole() : "null"));
 
-			// Redirect to login page
-			httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
-			return;
-		}
+        if (user == null) {
+            // Store the requested URL for redirection after login
+            SessionUtil.setAttribute(httpRequest, "redirectUrl", requestedUrl);
+            // Redirect to login page
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/login");
+            return;
+        }
 
-		// User is authenticated, proceed with request
-		chain.doFilter(request, response);
-	}
+        // Check if user is admin for /admin/* paths
+        if (requestedUrl.startsWith(httpRequest.getContextPath() + "/admin/") && !"admin".equalsIgnoreCase(user.getRole())) {
+            System.out.println("AuthFilter: User " + user.getUsername() + " is not an admin, redirecting to home");
+            httpResponse.sendRedirect(httpRequest.getContextPath() + "/home");
+            return;
+        }
+
+        // User is authenticated and authorized, proceed with request
+        chain.doFilter(request, response);
+    }
 }

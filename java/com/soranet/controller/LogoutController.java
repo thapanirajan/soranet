@@ -9,55 +9,49 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
+import com.soranet.model.UserModel;
+import com.soranet.service.auth.UserService;
 
-/**
- * Servlet implementation class LogoutController
- */
 @WebServlet(asyncSupported = true, urlPatterns = { "/logout" })
 public class LogoutController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private UserService userService = new UserService();
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
 	public LogoutController() {
 		super();
 	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// Invalidate the session if it exists
-		HttpSession session = request.getSession(false);
-		if (session != null) {
-			session.invalidate();
-		}
-
-		// Delete all cookies
-		Cookie[] cookies = request.getCookies();
-		if (cookies != null) {
-			for (Cookie cookie : cookies) {
-				cookie.setValue("");
-				cookie.setPath("/"); // Ensure the cookie is deleted for the entire application
-				cookie.setMaxAge(0); // Expire the cookie immediately
-				response.addCookie(cookie);
+		try {
+			HttpSession session = request.getSession(false);
+			UserModel user = (UserModel) session.getAttribute("user");
+			int userId = user.getUserId();
+			userService.deleteAuthTokensById(userId);
+			if (session != null) {
+				session.invalidate();
 			}
+
+			Cookie[] cookies = request.getCookies();
+			if (cookies != null) {
+				for (Cookie cookie : cookies) {
+					cookie.setValue("");
+					cookie.setPath("/");
+					cookie.setMaxAge(0);
+					response.addCookie(cookie);
+				}
+			}
+			request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
+
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
 		}
-		request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-
 }

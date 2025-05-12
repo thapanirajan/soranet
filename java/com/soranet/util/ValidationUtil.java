@@ -10,10 +10,7 @@ public class ValidationUtil {
 		return value == null || value.trim().isEmpty();
 	}
 
-	// 2. Validate if a string contains only letters
-	public static boolean isAlphabetic(String value) {
-		return value != null && value.matches("^[a-zA-Z]+$");
-	}
+
 
 	// 3. Validate if a string starts with a letter and is composed of letters and
 	// numbers
@@ -57,5 +54,3 @@ public class ValidationUtil {
 
 }
 
-// admin dashbaord color 
-// #030711

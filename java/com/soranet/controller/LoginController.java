@@ -9,101 +9,82 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import com.soranet.model.UserModel;
+import com.soranet.service.auth.AuthService;
 import com.soranet.util.CookieUtil;
 import com.soranet.util.PasswordUtil;
 import com.soranet.util.SessionUtil;
-import com.soranet.service.AuthService;
 
-/**
- * Servlet implementation class LoginController
- */
 @WebServlet(asyncSupported = true, urlPatterns = { "/login" })
 public class LoginController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 1L;;
+    public LoginController() {
+        super();
+    }
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public LoginController() {
-		super();
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+        if (user == null) {
+            Cookie authCookie = CookieUtil.getCookie(request, "authToken");
+            if (authCookie != null) {
+                try {
+                    AuthService authService = new AuthService();
+                    user = authService.validateToken(authCookie.getValue());
+                    if (user != null) {
+                        SessionUtil.setAttribute(request, "user", user);
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
-		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
+        if (user != null) {
+            String redirectPath = switch (user.getRole().toLowerCase()) {
+                case "admin" -> "/admin/dashboard";
+                case "customer" -> "/";
+                default -> "/WEB-INF/views/customer/login.jsp";
+            };
+            response.sendRedirect(request.getContextPath() + redirectPath);
+            return;
+        }
 
-		if (user == null) {
-			Cookie authCookie = CookieUtil.getCookie(request, "authToken");
-			if (authCookie != null) {
-				try {
-					user = AuthService.validateToken(authCookie.getValue());
-					if (user != null) {
-						SessionUtil.setAttribute(request, "user", user);
-					}
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
+        request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
+    }
 
-		if (user != null) {
-			String redirectPath = switch (user.getRole().toLowerCase()) {
-			case "admin" -> "/admin/dashboard";
-			case "customer" -> "/";
-			default -> "/WEB-INF/views/customer/login.jsp";
-			};
-			response.sendRedirect(request.getContextPath() + redirectPath);
-			return;
-		}
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String loginId = request.getParameter("loginId");
+            String password = request.getParameter("password");
+            String rememberMe = request.getParameter("rememberMe");
 
-		request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
+            if (loginId == null || loginId.trim().isEmpty() || password == null || password.trim().isEmpty()) {
+                request.setAttribute("message", "Please fill in all required fields.");
+                request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
+                return;
+            }
 
-	}
+            AuthService authService = new AuthService();
+            UserModel user = authService.getUserByLoginId(loginId);
+            if (user == null || !PasswordUtil.verifyPassword(password, user.getPassword())) {
+                request.setAttribute("message", "Invalid username or password.");
+                request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
+                return;
+            }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+            int expiryDays = "on".equals(rememberMe) ? 30 : 1;
+            String   token = authService.generateAndStoreToken(user.getUserId(), expiryDays);
+            CookieUtil.addCookie(response, "authToken", token, expiryDays * 24 * 60 * 60);
 
-		try {
-			String loginId = request.getParameter("loginId");
-			String password = request.getParameter("password");
-			String rememberMe = request.getParameter("rememberMe");
+            SessionUtil.setAttribute(request, "user", user);
 
-			// Validate input
-			if (loginId == null || loginId.trim().isEmpty() || password == null || password.trim().isEmpty()) {
-				request.setAttribute("message", "Please fill in all required fields.");
-				request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
-				return;
-			}
-
-			UserModel user = AuthService.getUserByLoginId(loginId);
-			if (user == null || !PasswordUtil.verifyPassword(password, user.getPassword())) {
-				request.setAttribute("message", "Invalid username or password.");
-				request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
-				return;
-			}
-
-			int expiryDays = "on".equals(rememberMe) ? 30 : 1;
-			String token = AuthService.generateAndStoreToken(user.getUserId(), expiryDays);
-			CookieUtil.addCookie(response, "authToken", token, expiryDays * 24 * 60 * 60);
-
-			SessionUtil.setAttribute(request, "user", user);
-
-			response.sendRedirect(request.getContextPath() + "/login");
-
-		} catch (Exception e) {
-			request.setAttribute("message", "Login failed: " + e.getMessage());
-			request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
-		}
-	}
-
+            response.sendRedirect(request.getContextPath() + "/login");
+        } catch (Exception e) {
+            request.setAttribute("message", "Login failed: " + e.getMessage());
+            request.getRequestDispatcher("/WEB-INF/views/customer/login.jsp").forward(request, response);
+        }
+    }
 }

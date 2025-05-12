@@ -10,133 +10,151 @@ import jakarta.servlet.http.Part;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-/*import java.util.Random;*/
 
 import com.soranet.model.UserModel;
-import com.soranet.service.AuthService;
+import com.soranet.service.auth.AuthService;
+import com.soranet.service.auth.UserService;
 import com.soranet.util.CookieUtil;
+import com.soranet.util.ImageUtil;
 import com.soranet.util.PasswordUtil;
 import com.soranet.util.SessionUtil;
 import com.soranet.util.ValidationUtil;
 
-/**
- * Servlet implementation class RegisterController
- */
 @WebServlet(asyncSupported = true, urlPatterns = { "/register" })
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, // 1MB
+        maxFileSize = 1024 * 1024 * 5, // 5MB
+        maxRequestSize = 1024 * 1024 * 5 // 5MB
+)
 public class RegisterController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    private final ImageUtil imageUtil = new ImageUtil();
 
-	private static final long serialVersionUID = 1L;
+    private static final String ABSOLUTE_WORKSPACE_WEBAPP_PATH = "C:/Users/thapa/eclipse-workspace/soranet/src/main/webapp";
+    private static final String PROFILE_PICS_SUBFOLDER = "/profile_pictures";
+    private static final String DEFAULT_PROFILE_PICTURE_DB_PATH = ImageUtil.WEB_RELATIVE_UPLOAD_DIR_ROOT
+            + PROFILE_PICS_SUBFOLDER + "/" + ImageUtil.GENERIC_DEFAULT_IMAGE_FILENAME;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public RegisterController() {
-		super();
-	}
+    public RegisterController() {
+        super();
+    }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/views/customer/register.jsp").forward(request, response);
-	}
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        request.removeAttribute("errorMessage");
+        request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
+    }
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		try {
-			// Retrieve form data
-			String firstName = request.getParameter("firstName");
-			String lastName = request.getParameter("lastName");
-			String email = request.getParameter("email");
-			String phoneNumber = request.getParameter("phoneNumber");
-			/* String role = request.getParameter("role"); */
-			String username = request.getParameter("username");
-			String address = request.getParameter("address");
-			String city = request.getParameter("city");
-			String password = request.getParameter("password");
-			String confirmPassword = request.getParameter("confirm_password");
-			Part profilePicturePart = request.getPart("profilePicture");
-			String profilePicture = (profilePicturePart != null && profilePicturePart.getSize() > 0)
-					? profilePicturePart.getSubmittedFileName()
-					: null;
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        try {
+            String firstName = request.getParameter("firstName");
+            String lastName = request.getParameter("lastName");
+            String email = request.getParameter("email");
+            String phoneNumber = request.getParameter("phoneNumber");
+            String username = request.getParameter("username");
+            String address = request.getParameter("address");
+            String city = request.getParameter("city");
+            String password = request.getParameter("password");
+            String confirmPassword = request.getParameter("confirm_password");
+            Part profilePicturePart = request.getPart("profilePicture");
 
-			// Initialize error message
-			String errorMessage = null;
+            String errorMessage = null;
 
-			// Validate for null or empty fields using ValidationUtil
-			if (ValidationUtil.isNullOrEmpty(firstName)) {
-				errorMessage = "First name is required.";
-			} else if (ValidationUtil.isNullOrEmpty(lastName)) {
-				errorMessage = "Last name is required.";
-			} else if (ValidationUtil.isNullOrEmpty(email)) {
-				errorMessage = "Email is required.";
-			} else if (!ValidationUtil.isValidEmail(email)) {
-				errorMessage = "Invalid email format.";
-			} else if (ValidationUtil.isNullOrEmpty(phoneNumber)) {
-				errorMessage = "Phone number is required.";
-			} else if (!ValidationUtil.isValidPhoneNumber(phoneNumber)) {
-				errorMessage = "Phone number must be 10 digits starting with 98.";
-			} else if (ValidationUtil.isNullOrEmpty(username)) {
-				errorMessage = "Username is required.";
-			} else if (!ValidationUtil.isAlphanumericStartingWithLetter(username)) {
-				errorMessage = "Username must start with a letter and contain only letters and numbers.";
-			} else if (ValidationUtil.isNullOrEmpty(address)) {
-				errorMessage = "Address is required.";
-			} else if (ValidationUtil.isNullOrEmpty(city)) {
-				errorMessage = "City is required.";
-			} else if (ValidationUtil.isNullOrEmpty(password)) {
-				errorMessage = "Password is required.";
-			} else if (!ValidationUtil.isValidPassword(password)) {
-				errorMessage = "Password must be at least 8 characters, with 1 capital letter, 1 number, and 1 symbol.";
-			} else if (!ValidationUtil.doPasswordsMatch(password, confirmPassword)) {
-				errorMessage = "Passwords do not match.";
-			} else if (profilePicturePart != null && profilePicturePart.getSize() > 0
-					&& !ValidationUtil.isValidImageExtension(profilePicturePart)) {
-				errorMessage = "Profile picture must be a JPG, JPEG, PNG, or GIF file.";
-			}
+            if (ValidationUtil.isNullOrEmpty(firstName)) {
+                errorMessage = "First name is required.";
+            } else if (ValidationUtil.isNullOrEmpty(lastName)) {
+                errorMessage = "Last name is required.";
+            } else if (ValidationUtil.isNullOrEmpty(email)) {
+                errorMessage = "Email is required.";
+            } else if (!ValidationUtil.isValidEmail(email)) {
+                errorMessage = "Invalid email format.";
+            } else {
+                AuthService authService = new AuthService();
+                if (authService.getUserByLoginId(email) != null) {
+                    errorMessage = "This email address is already registered.";
+                }
+            }
+            if (ValidationUtil.isNullOrEmpty(phoneNumber)) {
+                errorMessage = "Phone number is required.";
+            } else if (!ValidationUtil.isValidPhoneNumber(phoneNumber)) {
+                errorMessage = "Phone number must be 10 digits starting with 98.";
+            } else if (ValidationUtil.isNullOrEmpty(username)) {
+                errorMessage = "Username is required.";
+            } else if (!ValidationUtil.isAlphanumericStartingWithLetter(username)) {
+                errorMessage = "Username must start with a letter and contain only letters and numbers.";
+            } else {
+                UserService userService = new UserService();
+                if (userService.getUserByUsername(username) != null) {
+                    errorMessage = "This username is already taken.";
+                }
+            }
+            if (ValidationUtil.isNullOrEmpty(password)) {
+                errorMessage = "Password is required.";
+            } else if (!ValidationUtil.isValidPassword(password)) {
+                errorMessage = "Password must be at least 8 characters, with 1 capital letter, 1 number, and 1 symbol.";
+            } else if (!ValidationUtil.doPasswordsMatch(password, confirmPassword)) {
+                errorMessage = "Passwords do not match.";
+            }
 
-			// If validation fails, forward back to the registration page with error message
-			if (errorMessage != null) {
-				request.setAttribute("message", errorMessage);
-				request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
-				return;
-			}
+            boolean newImageProvided = (profilePicturePart != null && profilePicturePart.getSize() > 0
+                    && profilePicturePart.getSubmittedFileName() != null
+                    && !profilePicturePart.getSubmittedFileName().isEmpty());
+            if (errorMessage == null && newImageProvided) {
+                if (!ValidationUtil.isValidImageExtension(profilePicturePart)) {
+                    errorMessage = "Profile picture must be a JPG, JPEG, PNG, or GIF file.";
+                } else if (profilePicturePart.getSize() > 5 * 1024 * 1024) {
+                    errorMessage = "Profile picture file size must be less than 5MB.";
+                }
+            }
 
-			/*
-			 * Random rand = new Random(); int userId = 10000 + rand.nextInt(90000);
-			 */
+            if (errorMessage != null) {
+                request.setAttribute("errorMessage", errorMessage);
+                request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
+                return;
+            }
 
-			// Hash the password
-			String hashedPassword = PasswordUtil.hashPassword(password);
+            String profilePictureDbPath = DEFAULT_PROFILE_PICTURE_DB_PATH;
+            if (newImageProvided) {
+                String uploadedRelativePath = imageUtil.uploadImageToWorkspace(profilePicturePart,
+                        ABSOLUTE_WORKSPACE_WEBAPP_PATH, PROFILE_PICS_SUBFOLDER);
+                if (uploadedRelativePath != null) {
+                    profilePictureDbPath = uploadedRelativePath;
+                } else {
+                    System.err.println("RegisterController: Profile picture upload failed, using default. User: " + username);
+                    request.setAttribute("warningMessage", "Could not upload profile picture, using default image.");
+                }
+            }
 
-			// Create UserModel object
-			UserModel user = new UserModel(0, username, hashedPassword, "customer", firstName, lastName, email,
-					phoneNumber, address, city, profilePicture, LocalDateTime.now(), null);
+            String hashedPassword = PasswordUtil.hashPassword(password);
+            UserModel userToRegister = new UserModel(0, username, hashedPassword, "customer", firstName, lastName,
+                    email, phoneNumber, address, city, profilePictureDbPath, LocalDateTime.now(), null);
 
-			// Save user via RegisterService
-			AuthService.registerUser(user);
+            UserService userService = new UserService();
+            boolean registrationSuccess = userService.registerUser(userToRegister);
 
-			System.out.println("User ID after createUser: " + user.getUserId());
+            if (registrationSuccess) {
+                UserModel registeredUser = userService.getUserByUsername(username);
+                if (registeredUser != null) {
+                    AuthService authService = new AuthService();
+                    int expiryDays = 1;
+                    String token = authService.generateAndStoreToken(registeredUser.getUserId(), expiryDays);
+                    CookieUtil.addCookie(response, "authToken", token, expiryDays * 24 * 60 * 60);
+                    SessionUtil.setAttribute(request, "user", registeredUser);
 
-			int expiryDays = 1;
-			String token = AuthService.generateAndStoreToken(user.getUserId(), expiryDays);
-
-			CookieUtil.addCookie(response, "authToken", token, expiryDays * 24 * 60 * 60);
-
-			SessionUtil.setAttribute(request, "user", user);
-
-			response.sendRedirect(request.getContextPath() + "/login");
-
-		} catch (Exception e) {
-			request.setAttribute("message", "Registration failed: " + e.getMessage());
-			request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
-		}
-	}
+                    response.sendRedirect(request.getContextPath() + "/user/dashboard?registration=success");
+                } else {
+                    request.setAttribute("errorMessage",
+                            "Registration seemed successful, but could not log you in. Please try logging in manually.");
+                    request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
+                }
+            } else {
+                request.setAttribute("errorMessage", "Registration failed due to a server error. Please try again.");
+                request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errorMessage", "Registration failed due to an unexpected error. Please try again.");
+            request.getRequestDispatcher("/WEB-INF/views/customer/register.jsp").forward(request, response);
+        }
+    }
 }

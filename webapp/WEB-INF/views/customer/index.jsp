@@ -7,302 +7,105 @@
 <meta charset="UTF-8">
 <title>SoraNet - Home page</title>
 <link rel="stylesheet"
-	href="${pageContext.request.contextPath}/css/index.css" type="text/css">
+	href="${pageContext.request.contextPath}/css/index.css">
 <style>
-body {
-	font-family: Arial, sans-serif;
-	line-height: 1.6;
-	background-color: #fff;
-}
-
-.hero {
-	background: linear-gradient(to bottom right, #1e40af, #1d4ed8);
-	color: white;
-	padding: 5rem 0;
-}
-
-.hero-content {
+.home-plan-grid {
 	display: flex;
-	gap: 2rem;
-	max-width: 77%;
-	margin: 0 auto;
-	align-items: center;
-}
-
-.hero-text {
-	flex: 1;
-}
-
-.hero-text h1 {
-	font-size: 2.5rem;
-	margin-bottom: 1.5rem;
-}
-
-.hero-text p {
-	font-size: 1.25rem;
-	margin-bottom: 2rem;
-	color: #bfdbfe;
-}
-
-.hero-image {
-	flex: 1;
-}
-
-.hero-image img {
-	width: 100%;
-	border-radius: 0.5rem;
-	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.buttons {
-	display: flex;
-	gap: 1rem;
-}
-
-.button {
-	padding: 1rem 2rem;
-	border-radius: 0.375rem;
-	font-weight: bold;
-	text-decoration: none;
-	transition: background-color 0.3s, color 0.3s;
-}
-
-.button.primary {
-	background-color: #3b82f6;
-	color: white;
-	border: 2px solid #3b82f6;
-}
-
-.button.primary:hover {
-	background-color: #2563eb;
-	border-color: #2563eb;
-}
-
-.button.outline {
-	background-color: transparent;
-	color: white;
-	border: 2px solid white;
-}
-
-.button.outline:hover {
-	background-color: white;
-	color: #3b82f6;
-}
-
-.features, .testimonials {
-	background-color: #f9fafb;
-	padding: 4rem 0;
-}
-
-.features-header, .testimonials-header, .plans-header {
-	text-align: center;
-	margin-bottom: 3rem;
-}
-
-.features-header h2, .testimonials-header h2, .plans-header h2 {
-	font-size: 2rem;
-	margin-bottom: 1rem;
-}
-
-.features-header p, .testimonials-header p, .plans-header p {
-	font-size: 1.125rem;
-	color: #6b7280;
-	max-width: 36rem;
-	margin: 0 auto;
-}
-
-.features-grid, .testimonials-grid {
-	display: grid;
-	gap: 2rem;
-	max-width: 1200px;
-	margin: 0 auto;
-}
-
-.plans {
-	margin: 4px;
-}
-
-.plans-grid {
-	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	gap: 20px;
 }
 
 .home-plan-card {
-	background: white;
-	padding: 30px;
-	border-radius: 12px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	position: relative;
 	width: 300px;
+	background: white;
+	border: 1px solid #ccc;
+	border-radius: 12px;
+	padding: 24px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 	text-align: center;
+	margin-bottom: 2rem;
+}
+
+.plan-badge {
+	position: absolute;
+	top: -12px;
+	left: 50%;
+	transform: translateX(-50%);
+	background-color: #2962ff;
+	color: white;
+	padding: 5px 12px;
+	font-size: 0.75rem;
+	border-radius: 12px;
+	font-weight: bold;
 }
 
 .home-plan-title {
-	margin: 0;
-	font-size: 24px;
-}
-
-.home-plan-price {
-	font-size: 24px;
-	margin: 15px 0;
+	font-size: 1.3rem;
+	margin-bottom: 10px;
 }
 
 .home-plan-price span {
-	font-weight: bold;
-}
-
-.home-plan-price small {
-	font-size: 14px;
-	color: gray;
-}
-
-.home-plan-speed {
-	background: #f0f6ff;
-	color: #005bff;
-	font-weight: bold;
-	padding: 10px;
-	margin: 15px 0;
-	border-radius: 10px;
-}
-
-.home-plan-features {
-	list-style: none;
-	padding: 0;
-	text-align: left;
-	margin-bottom: 20px;
-}
-
-.home-plan-features li {
-	margin: 10px 0;
-	color: #333;
-}
-
-.home-plan-btn {
-	padding: 10px 20px;
-	border: 1px solid #ccc;
-	background: white;
-	border-radius: 6px;
-	cursor: pointer;
-	transition: 0.3s;
-}
-
-.home-plan-btn:hover {
-	background: #f0f0f0;
-}
-
-.features-grid {
-	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-}
-
-.feature-card {
-	background-color: white;
-	padding: 1.5rem;
-	border-radius: 0.5rem;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-	text-align: center;
-}
-
-.feature-card .icon {
-	width: 4rem;
-	height: 4rem;
-	border-radius: 9999px;
-	margin: 0 auto 1rem;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	font-size: 1.5rem;
-}
-
-.feature-card h3 {
-	font-size: 1.25rem;
-	margin-bottom: 0.5rem;
-}
-
-.feature-card p {
-	color: #6b7280;
-}
-
-.home-plan-grid {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 20px;
-	justify-content: center;
-	padding: 20px;
-}
-
-.home-plan-card {
-	background-color: #fff;
-	padding: 30px;
-	width: 300px;
-	border-radius: 10px;
-	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-	text-align: center;
-}
-
-.home-plan-title {
-	font-size: 1.5rem;
-	font-weight: bold;
-	margin-bottom: 10px;
-}
-
-.home-plan-price {
 	font-size: 1.8rem;
 	font-weight: bold;
-	margin-bottom: 10px;
+	color: #1a1a1a;
 }
 
 .home-plan-price small {
-	font-size: 1rem;
-	opacity: 0.8;
+	font-size: 0.85rem;
+	color: #666;
 }
 
 .home-plan-speed {
-	background-color: #eef5ff;
-	color: #0071f2;
+	margin: 12px auto;
+	padding: 10px 0;
+	width: 100%;
+	background: #eef4ff;
+	color: #2962ff;
 	font-weight: bold;
-	padding: 10px;
 	border-radius: 8px;
-	margin: 15px 0;
 }
 
 .home-plan-features {
 	list-style: none;
 	padding: 0;
+	margin: 15px 0;
 	text-align: left;
-	margin: 20px 0;
 }
 
 .home-plan-features li {
-	margin-bottom: 8px;
-	position: relative;
-	padding-left: 20px;
-	color: #333;
-}
-
-.home-plan-features li::before {
-	content: "✔";
-	color: green;
-	position: absolute;
-	left: 0;
+	margin: 6px 0;
 }
 
 .home-plan-btn {
 	display: inline-block;
 	padding: 10px 20px;
+	margin-top: 10px;
 	border-radius: 8px;
-	font-weight: 500;
+	font-weight: bold;
 	text-decoration: none;
-	transition: background-color 0.3s ease;
+	transition: background-color 0.3s;
 }
 
 .btn-primary {
-	background-color: #0071f2;
+	background-color: #2962ff;
 	color: white;
 	border: none;
 }
 
+.btn-primary:hover {
+	background-color: #0039cb;
+}
+
 .btn-outline {
+	border: 1px solid #ccc;
+	color: #333;
 	background-color: white;
-	color: #0071f2;
-	border: 1px solid #0071f2;
+}
+
+.btn-outline:hover {
+	background-color: #f4f4f4;
 }
 </style>
 </head>
@@ -330,9 +133,8 @@ body {
 				</div>
 
 				<div class="hero-image">
-					<%-- <img src="${pageContext.request.contextPath}/resources/images/herosection.jpg"> --%>
 					<img
-						src="https://images.unsplash.com/photo-1640622304964-3e2c2c0cd7cd?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+						src="${pageContext.request.contextPath}/resources/images/herosection.jpg">
 				</div>
 			</div>
 		</section>
@@ -388,7 +190,7 @@ body {
 						<div class="home-plan-speed">${plan.speed}</div>
 						<ul class="home-plan-features">
 							<c:forEach var="feature" items="${plan.features}">
-								<li>${feature}</li>
+								<li>✔️ ${feature}</li>
 							</c:forEach>
 						</ul>
 						<a href="${pageContext.request.contextPath}/plan"

@@ -10,7 +10,7 @@ import java.util.List;
 
 import com.soranet.model.PaymentModel;
 import com.soranet.model.UserModel;
-import com.soranet.service.AdminService;
+import com.soranet.service.payment.PaymentService;
 import com.soranet.util.SessionUtil;
 
 /**
@@ -19,11 +19,11 @@ import com.soranet.util.SessionUtil;
 @WebServlet(asyncSupported = true, urlPatterns = { "/admin/payments" })
 public class PaymentTrackingController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AdminService adminService;
+	private PaymentService paymentService;
 
 	@Override
 	public void init() throws ServletException {
-		adminService = new AdminService();
+		paymentService = new PaymentService();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -34,7 +34,7 @@ public class PaymentTrackingController extends HttpServlet {
 		}
 
 		try {
-			List<PaymentModel> payments = adminService.getAllPayments();
+			List<PaymentModel> payments = paymentService.getAllPayments();
 			request.setAttribute("payments", payments);
 			request.getRequestDispatcher("/WEB-INF/views/admin/paymentTracking.jsp").forward(request, response);
 		} catch (Exception e) {

@@ -7,8 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Login</title>
-
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 <style>
+@charset "UTF-8";
 * {
 	margin: 0;
 	padding: 0;
@@ -47,13 +48,14 @@ body {
 }
 
 .login-box {
-	/* border: 1px solid #000000; */
-	/* border-top: 1px solid #059669; */
+	border: 1px solid #000000;
+	border-top: 1px solid #059669;
 	padding: 5rem;
 	box-shadow: 0 20px 25px -5px rgb(0 0 0/ 0.1), 0 8px 10px -6px
 		rgb(0 0 0/ 0.1);
 	border-radius: 0.8rem;
 	background-color: white;
+	border: 1px solid #059669;
 	width: 40rem;
 }
 
@@ -123,7 +125,8 @@ body {
 
 small {
 	font-size: 14px;
-}
+} 
+
 </style>
 </head>
 <body>

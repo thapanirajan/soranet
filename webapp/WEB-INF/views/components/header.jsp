@@ -124,6 +124,21 @@ header {
 	display: block;
 }
 
+.user-menu img{
+	height: 30px;
+	width: 30px;
+	border-radius: 50%;
+	object-fit:cover;
+	border: 1px solid black;
+	box-shadow: 2px 2px 2px rgba(0,0,0,0.3);
+}
+
+
+.user-menu .profile{
+	display:flex;
+	align-items: center;
+	gap:5px;
+}
 .dropdown a {
 	display: block;
 	padding: 0.5rem 1rem;
@@ -159,7 +174,12 @@ header {
 			<c:choose>
 				<c:when test="${not empty sessionScope.user}">
 					<div class="user-menu">
-						<span>${sessionScope.user.getUsername()}</span>
+						<div class="profile">
+							 <img
+								src="${pageContext.request.contextPath}/${user.profilePicture}"
+								alt="Profile Picture" id="previewImage" class="preview-image">
+							<span>${sessionScope.user.getUsername()}</span>
+						</div>
 						<div class="dropdown">
 							<a href="${pageContext.request.contextPath}/user/profile">Profile</a>
 							<a href="${pageContext.request.contextPath}/logout">Logout</a>
@@ -169,7 +189,8 @@ header {
 				<c:otherwise>
 					<div class="auth-links">
 						<a href="${pageContext.request.contextPath}/login"
-							class="auth-login">Login</a> <a style="text-decoration: none; color:white;" 
+							class="auth-login">Login</a> <a
+							style="text-decoration: none; color: white;"
 							href="${pageContext.request.contextPath}/register"
 							class="auth-signup">Register</a>
 					</div>

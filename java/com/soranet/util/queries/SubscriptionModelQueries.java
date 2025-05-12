@@ -2,7 +2,7 @@ package com.soranet.util.queries;
 
 public class SubscriptionModelQueries {
 	public static final String INSERT_SUBSCRIPTION = 
-	        "INSERT INTO Subscription (UserId, PlanId, StartDate, EndDate) VALUES (?, ?, ?, ?)";
+	        "INSERT INTO Subscription (UserId, PlanId, StartDate, EndDate,createdAt ) VALUES (?, ?, ?, ?,?)";
 	    
 	    public static final String SELECT_SUBSCRIPTION_BY_ID = 
 	        "SELECT * FROM Subscription WHERE SubscriptionId = ?";

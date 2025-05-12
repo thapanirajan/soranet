@@ -8,92 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<style>
-* {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-	font-family: Arial, sans-serif;
-}
-
-.container {
-	max-width: 1200px;
-	margin: 0 auto;
-	padding: 2rem;
-}
-
-.payment-container {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 2rem;
-	background: #fff;
-	padding: 2rem;
-	border-radius: 8px;
-	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.plan-summary {
-	background: #f8f9fa;
-	padding: 1.5rem;
-	border-radius: 8px;
-}
-
-.form-group {
-	margin-bottom: 1rem;
-}
-
-label {
-	display: block;
-	margin-bottom: 0.5rem;
-	font-weight: 600;
-	color: #1a1a1a;
-}
-
-input {
-	width: 100%;
-	padding: 0.8rem;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	font-size: 1rem;
-}
-
-.btn {
-	padding: 1rem 2rem;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
-	font-size: 1rem;
-	font-weight: 600;
-}
-
-.btn-primary {
-	background: #2563eb;
-	color: white;
-}
-
-.btn-primary:hover {
-	background: #1d4ed8;
-}
-
-.error {
-	color: #dc2626;
-	margin-top: 0.5rem;
-	font-size: 0.875rem;
-}
-
-/* Custom styled select */
-.styled-select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    background-color: #fdfdfd;
-    color: #333;
-    outline: none;
-    cursor: pointer;
-}
-</style>
+<link rel="stylesheet"  href="${pageContext.request.contextPath}/css/payment.css">
 </head>
 <body>
 	<%
@@ -120,7 +35,7 @@ input {
 					</div>
 				</div>
 
-				<form action="${pageContext.request.contextPath}/processPayment"
+				<form action="${pageContext.request.contextPath}/payment"
 					method="post">
 					<input type="hidden" name="planId" value="${selectedPlan.planId}">
 					<input type="hidden" name="amount" value="${selectedPlan.price}">

@@ -12,7 +12,7 @@ import java.util.List;
 
 import com.soranet.model.SubscriptionModel;
 import com.soranet.model.UserModel;
-import com.soranet.service.AdminService;
+import com.soranet.service.subscription.SubscriptionService;
 import com.soranet.util.SessionUtil;
 
 /**
@@ -21,12 +21,8 @@ import com.soranet.util.SessionUtil;
 @WebServlet(asyncSupported = true, urlPatterns = { "/admin/subscriptions" })
 public class SubscriptionManagementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private AdminService adminService;
+	SubscriptionService subscriptionService = new SubscriptionService();
 
-	@Override
-	public void init() throws ServletException {
-		adminService = new AdminService();
-	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -36,12 +32,12 @@ public class SubscriptionManagementController extends HttpServlet {
 		}
 
 		try {
-			List<SubscriptionModel> subscriptions = adminService.getAllSubscriptions();
+			List<SubscriptionModel> subscriptions = subscriptionService.getAllSubscriptions();
 			request.setAttribute("subscriptions", subscriptions);
 			request.getRequestDispatcher("/WEB-INF/views/admin/subscriptionManagement.jsp").forward(request, response);
 		} catch (Exception e) {
 			request.setAttribute("errorMessage", "Error loading subscriptions: " + e.getMessage());
-			request.getRequestDispatcher("/WEB-INF/views/admin/error.jsp").forward(request, response);
+			request.getRequestDispatcher("/WEB-INF/views/components/error.jsp").forward(request, response);
 		}
 	}
 
@@ -53,29 +49,41 @@ public class SubscriptionManagementController extends HttpServlet {
 		}
 
 		try {
-			int subscriptionId = Integer.parseInt(request.getParameter("subscriptionId"));
+			// Get parameters
 			int userId = Integer.parseInt(request.getParameter("userId"));
 			int planId = Integer.parseInt(request.getParameter("planId"));
 			String startDateStr = request.getParameter("startDate");
 			String endDateStr = request.getParameter("endDate");
+			String paymentMethod = request.getParameter("paymentMethod");
 
 			// Validate inputs
-			if (startDateStr == null || startDateStr.isEmpty() || endDateStr == null || endDateStr.isEmpty()) {
-				throw new IllegalArgumentException("Date fields are required");
+			if (startDateStr == null || startDateStr.isEmpty() || endDateStr == null || endDateStr.isEmpty()
+					|| paymentMethod == null || paymentMethod.isEmpty()) {
+				throw new IllegalArgumentException("Required fields are missing");
 			}
 			if (userId <= 0 || planId <= 0) {
 				throw new IllegalArgumentException("Invalid user ID or plan ID");
 			}
 
-			// Parse startDate and endDate to LocalDate
+			// Check if userId exists
+			if (!subscriptionService.userExists(userId)) {
+				throw new IllegalArgumentException("User with ID " + userId + " does not exist");
+			}
+
+			// Check if planId exists
+			if (!subscriptionService.planExists(planId)) {
+				throw new IllegalArgumentException("Plan with ID " + planId + " does not exist");
+			}
+
 			LocalDate startDate = parseDate(startDateStr);
 			LocalDate endDate = parseDate(endDateStr);
 
-			SubscriptionModel subscription = new SubscriptionModel(subscriptionId, userId, planId, startDate, endDate, null);
+			SubscriptionModel subscription = new SubscriptionModel(0, userId, planId, startDate, endDate, null);
 
-			boolean success = adminService.updateSubscription(subscription);
+			
+			boolean success = subscriptionService.createSubscriptionWithPayment(subscription, paymentMethod);
 			request.setAttribute("successMessage",
-					success ? "Subscription updated successfully" : "Failed to update subscription");
+					success ? "Subscription and payment created successfully" : "Failed to create subscription");
 
 			doGet(request, response);
 		} catch (NumberFormatException e) {
@@ -88,7 +96,8 @@ public class SubscriptionManagementController extends HttpServlet {
 			request.setAttribute("errorMessage", "Invalid date format. Please use yyyy-MM-dd.");
 			doGet(request, response);
 		} catch (Exception e) {
-			request.setAttribute("errorMessage", "Error updating subscription: " + e.getMessage());
+			System.err.println("SubscriptionManagementController: Error creating subscription: " + e.getMessage());
+			request.setAttribute("errorMessage", "Error creating subscription: " + e.getMessage());
 			doGet(request, response);
 		}
 	}
