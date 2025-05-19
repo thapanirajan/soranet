@@ -24,8 +24,7 @@ import com.soranet.util.ValidationUtil;
 public class ProfileManagementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private final ImageUtil imageUtil = new ImageUtil();
-    private UserService userService = new UserService();
-
+	private UserService userService = new UserService();
 
 	private static final String ABSOLUTE_WORKSPACE_WEBAPP_PATH = "C:/Users/thapa/eclipse-workspace/soranet/src/main/webapp";
 	private static final String PROFILE_PICS_SUBFOLDER = "/profile_pictures";
@@ -36,8 +35,20 @@ public class ProfileManagementController extends HttpServlet {
 		super();
 	}
 
+	/**
+	 * Handles GET requests to display the admin profile page. Verifies admin
+	 * access, retrieves the admin's profile data, and forwards to the
+	 * profileManagement JSP. Redirects to login if the user is not found or not an
+	 * admin.
+	 *
+	 * @param request  the HttpServletRequest object containing client request data
+	 * @param response the HttpServletResponse object for sending the response
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs during request processing
+	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Check if user is admin
 		if (!isAdmin(request)) {
 			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied. You must be an admin.");
 			return;
@@ -45,25 +56,39 @@ public class ProfileManagementController extends HttpServlet {
 
 		UserModel sessionUser = (UserModel) SessionUtil.getAttribute(request, "user");
 		try {
+			// Fetch admin profile from database
 			UserModel adminUserData = userService.getUserByUsername(sessionUser.getUsername());
 			if (adminUserData == null) {
 				request.setAttribute("errorMessage", "Admin profile not found.");
-				SessionUtil.removeAttribute(request, "user"); // Clear session
-				response.sendRedirect(request.getContextPath() + "/login"); // Or admin login
+				SessionUtil.removeAttribute(request, "user");
+				response.sendRedirect(request.getContextPath() + "/login");
 				return;
 			}
+			// Set user data for JSP
 			request.setAttribute("user", adminUserData);
 			request.getRequestDispatcher("/WEB-INF/views/admin/profileManagement.jsp").forward(request, response);
 		} catch (Exception e) {
 			e.printStackTrace();
 			request.setAttribute("errorMessage", "Error loading admin profile: " + e.getMessage());
-			request.setAttribute("user", sessionUser); // Fallback
+			request.setAttribute("user", sessionUser);
 			request.getRequestDispatcher("/WEB-INF/views/admin/profileManagement.jsp").forward(request, response);
 		}
 	}
 
+	/**
+	 * Handles POST requests to update the admin's profile. Validates input fields
+	 * and profile picture, updates the database, and handles image uploads.
+	 * Forwards to the profileManagement JSP with success or error messages.
+	 *
+	 * @param request  the HttpServletRequest object containing form data and file
+	 *                 upload
+	 * @param response the HttpServletResponse object for sending the response
+	 * @throws ServletException if a servlet-specific error occurs
+	 * @throws IOException      if an I/O error occurs during request processing
+	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		// Verify admin access
 		if (!isAdmin(request)) {
 			response.sendError(HttpServletResponse.SC_FORBIDDEN, "Access denied. You must be an admin.");
 			return;
@@ -74,14 +99,16 @@ public class ProfileManagementController extends HttpServlet {
 		UserModel currentAdminData = null;
 
 		try {
+			// Retrieve current admin data
 			currentAdminData = userService.getUserByUsername(username);
 			if (currentAdminData == null) {
 				request.setAttribute("errorMessage", "Admin profile not found. Please log in again.");
 				SessionUtil.removeAttribute(request, "user");
-				response.sendRedirect(request.getContextPath() + "/login"); // or admin login
+				response.sendRedirect(request.getContextPath() + "/login");
 				return;
 			}
 
+			// Extract form parameters
 			String firstName = request.getParameter("firstName");
 			String lastName = request.getParameter("lastName");
 			String email = request.getParameter("email");
@@ -95,7 +122,7 @@ public class ProfileManagementController extends HttpServlet {
 				newProfilePictureDbPath = DEFAULT_PROFILE_PICTURE_DB_PATH;
 			}
 
-			// --- Validation ---
+			// Validate input fields
 			String validationError = null;
 			if (ValidationUtil.isNullOrEmpty(firstName))
 				validationError = "First name is required.";
@@ -106,7 +133,6 @@ public class ProfileManagementController extends HttpServlet {
 			else if (!ValidationUtil.isValidEmail(email))
 				validationError = "Invalid email format.";
 
-			// Admin phone number validation (adjust if rules are different for admin)
 			if (phoneNumber != null && !phoneNumber.isEmpty() && !ValidationUtil.isValidPhoneNumber(phoneNumber)) {
 				validationError = "Phone number, if provided, must be 10 digits starting with 98.";
 			}
@@ -122,6 +148,7 @@ public class ProfileManagementController extends HttpServlet {
 					&& profilePicturePart.getSubmittedFileName() != null
 					&& !profilePicturePart.getSubmittedFileName().isEmpty());
 
+			// Validate profile picture
 			if (newImageProvided) {
 				if (!ValidationUtil.isValidImageExtension(profilePicturePart)) {
 					validationError = "Profile picture must be a JPG, JPEG, PNG, or GIF file.";
@@ -133,7 +160,6 @@ public class ProfileManagementController extends HttpServlet {
 			if (validationError != null) {
 				request.setAttribute("errorMessage", validationError);
 				request.setAttribute("user", currentAdminData);
-				// Repopulate form with attempted values
 				currentAdminData.setFirstName(firstName);
 				currentAdminData.setLastName(lastName);
 				currentAdminData.setEmail(email);
@@ -144,7 +170,7 @@ public class ProfileManagementController extends HttpServlet {
 				return;
 			}
 
-			// --- Handle profile picture upload ---
+			// Handle profile picture upload
 			if (newImageProvided) {
 				String uploadedRelativePath = imageUtil.uploadImageToWorkspace(profilePicturePart,
 						ABSOLUTE_WORKSPACE_WEBAPP_PATH, PROFILE_PICS_SUBFOLDER);
@@ -152,6 +178,7 @@ public class ProfileManagementController extends HttpServlet {
 					if (currentAdminData.getProfilePicture() != null && !currentAdminData.getProfilePicture().isEmpty()
 							&& !currentAdminData.getProfilePicture().equals(DEFAULT_PROFILE_PICTURE_DB_PATH)
 							&& !currentAdminData.getProfilePicture().equals(uploadedRelativePath)) {
+						// Previous image deletion is commented out in original code
 						/*
 						 * imageUtil.deleteImageFromWorkspace(ABSOLUTE_WORKSPACE_WEBAPP_PATH,
 						 * currentAdminData.getProfilePicture());
@@ -166,11 +193,12 @@ public class ProfileManagementController extends HttpServlet {
 				}
 			}
 
-			// --- Update user details ---
+			// Update user profile in database
 			boolean updateSuccess = userService.updateUser(username, firstName, lastName, email, phoneNumber, address,
 					city, newProfilePictureDbPath);
 
 			if (updateSuccess) {
+				// Refresh session with updated data
 				UserModel updatedAdmin = userService.getUserByUsername(username);
 				SessionUtil.setAttribute(request, "user", updatedAdmin);
 				request.setAttribute("successMessage", "Admin profile updated successfully.");
@@ -189,6 +217,12 @@ public class ProfileManagementController extends HttpServlet {
 		}
 	}
 
+	/**
+	 * Checks if the current user is an admin based on session data.
+	 *
+	 * @param request the HttpServletRequest object containing session data
+	 * @return true if the user is an admin, false otherwise
+	 */
 	private boolean isAdmin(HttpServletRequest request) {
 		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
 		return user != null && "admin".equalsIgnoreCase(user.getRole());

@@ -17,6 +17,14 @@ import java.util.List;
 
 public class SubscriptionService {
 
+	
+	/**
+	 * Retrieves all subscriptions from the database.
+	 *
+	 * @return a list of all SubscriptionModel objects.
+	 * @throws SQLException if a database access error occurs.
+	 * @throws ClassNotFoundException if the JDBC driver class is not found.
+	 */
     public List<SubscriptionModel> getAllSubscriptions() throws SQLException, ClassNotFoundException {
         List<SubscriptionModel> subscriptions = new ArrayList<>();
         try (Connection conn = DbConfig.getDbConnection();
@@ -37,6 +45,15 @@ public class SubscriptionService {
         return subscriptions;
     }
     
+    
+    /**
+     * Retrieves subscriptions by user ID or plan ID.
+     *
+     * @param searchId the userId or planId to search for.
+     * @return a list of matching SubscriptionModel objects.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     */
     public List<SubscriptionModel> getSubscriptionsByUserOrPlanId(int searchId) throws SQLException, ClassNotFoundException {
         List<SubscriptionModel> subscriptions = new ArrayList<>();
         try (Connection conn = DbConfig.getDbConnection();
@@ -61,6 +78,15 @@ public class SubscriptionService {
     }
 
 
+    
+    /**
+     * Updates a subscription record in the database.
+     *
+     * @param subscription the subscription model with updated values.
+     * @return true if the update was successful, false otherwise.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     */
     public boolean updateSubscription(SubscriptionModel subscription) throws SQLException, ClassNotFoundException {
         try (Connection conn = DbConfig.getDbConnection();
              PreparedStatement pstmt = conn.prepareStatement(SubscriptionModelQueries.UPDATE_SUBSCRIPTION_BY_ID)) {
@@ -73,6 +99,15 @@ public class SubscriptionService {
         }
     }
 
+    
+    /**
+     * Creates a new subscription record in the database.
+     *
+     * @param subscription the subscription model to insert.
+     * @return the generated subscription ID.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     */
     public int createSubscription(SubscriptionModel subscription) throws SQLException, ClassNotFoundException {
         try (Connection conn = DbConfig.getDbConnection();
              PreparedStatement stmt = conn.prepareStatement(SubscriptionModelQueries.INSERT_SUBSCRIPTION,
@@ -93,6 +128,18 @@ public class SubscriptionService {
         }
     }
 
+    
+    
+    /**
+     * Creates a new subscription and corresponding payment in a transactional manner.
+     *
+     * @param subscription the subscription model to insert.
+     * @param paymentMethod the payment method to use ("credit", "paypal", or "bank").
+     * @return true if both subscription and payment are created successfully.
+     * @throws SQLException if a database or transaction error occurs.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     * @throws IllegalArgumentException if the input parameters are invalid.
+     */
     public boolean createSubscriptionWithPayment(SubscriptionModel subscription, String paymentMethod)
             throws ClassNotFoundException, SQLException {
         try (Connection conn = DbConfig.getDbConnection()) {
@@ -175,6 +222,14 @@ public class SubscriptionService {
         }
     }
 
+    
+    /**
+     * Checks if a user exists by ID.
+     *
+     * @param userId the ID of the user.
+     * @return true if the user exists, false otherwise.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     */
     public boolean userExists(int userId) throws ClassNotFoundException {
         try (Connection conn = DbConfig.getDbConnection();
              PreparedStatement pstmt = conn.prepareStatement(SubscriptionModelQueries.CHECK_USER_EXISTS_BOOL)) {
@@ -191,6 +246,15 @@ public class SubscriptionService {
         return false;
     }
 
+    
+    
+    /**
+     * Checks if a plan exists by ID.
+     *
+     * @param planId the ID of the plan.
+     * @return true if the plan exists, false otherwise.
+     * @throws ClassNotFoundException if the JDBC driver class is not found.
+     */
     public boolean planExists(int planId) throws ClassNotFoundException {
         try (Connection conn = DbConfig.getDbConnection();
              PreparedStatement pstmt = conn.prepareStatement(SubscriptionModelQueries.CHECK_PLAN_EXISTS_BOOL)) {

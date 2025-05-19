@@ -13,13 +13,27 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Service class for managing user-related operations. Provides methods for user
+ * registration, retrieval, updating, deletion, and searching.
+ */
 public class UserService {
 
+	/**
+	 * Registers a new user in the database. Checks for duplicate username and
+	 * email, inserts user data, and retrieves generated user ID and creation
+	 * timestamp.
+	 *
+	 * @param user the UserModel containing user data to register
+	 * @return true if registration is successful, false if username or email
+	 *         already exists
+	 * @throws Exception if a database error occurs or registration fails
+	 */
 	public boolean registerUser(UserModel user) throws Exception {
 		try (Connection conn = DbConfig.getDbConnection()) {
 			conn.setAutoCommit(false);
 
-			// Check if username exists
+			// Check for existing username
 			try (PreparedStatement checkStmt = conn.prepareStatement(UserModelQueries.COUNT_USER_BY_USERNAME)) {
 				checkStmt.setString(1, user.getUsername());
 				try (ResultSet rs = checkStmt.executeQuery()) {
@@ -29,7 +43,7 @@ public class UserService {
 				}
 			}
 
-			// Check if email exists
+			// Check for existing email
 			try (PreparedStatement checkStmt = conn.prepareStatement(UserModelQueries.COUNT_USER_BY_EMAIL)) {
 				checkStmt.setString(1, user.getEmail());
 				try (ResultSet rs = checkStmt.executeQuery()) {
@@ -39,7 +53,7 @@ public class UserService {
 				}
 			}
 
-			// Insert user
+			// Insert user data
 			try (PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.INSERT_USER,
 					Statement.RETURN_GENERATED_KEYS)) {
 				pstmt.setString(1, user.getUsername());
@@ -58,6 +72,7 @@ public class UserService {
 					throw new SQLException("User registration failed, no rows inserted.");
 				}
 
+				// Retrieve generated user ID
 				try (ResultSet rs = pstmt.getGeneratedKeys()) {
 					if (rs.next()) {
 						user.setUserId(rs.getInt(1));
@@ -67,7 +82,7 @@ public class UserService {
 				}
 			}
 
-			// Retrieve CreatedAt
+			// Retrieve creation timestamp
 			try (PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.SELECT_CREATED_AT_BY_USERID)) {
 				pstmt.setInt(1, user.getUserId());
 				try (ResultSet rs = pstmt.executeQuery()) {
@@ -80,6 +95,7 @@ public class UserService {
 				}
 			}
 
+			// Commit transaction
 			conn.commit();
 			return true;
 		} catch (SQLException e) {
@@ -88,13 +104,19 @@ public class UserService {
 	}
 
 	/**
-	 * Retrieves a user by login ID (username or email).
+	 * Retrieves a user by their login ID (username or email).
+	 *
+	 * @param loginId the username or email to search for
+	 * @return the UserModel if found, or null if no user matches the login ID
+	 * @throws Exception if a database error occurs
 	 */
 	public static UserModel getUserByLoginId(String loginId) throws Exception {
+		// Establish database connection and prepare query
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.GET_USER_BY_LOGINID)) {
 			pstmt.setString(1, loginId);
 			pstmt.setString(2, loginId);
+			// Execute query and process results
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
 					return new UserModel(rs.getInt("UserId"), rs.getString("Username"), rs.getString("Password"),
@@ -113,8 +135,23 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * Updates a user's profile information in the database.
+	 *
+	 * @param username       the username of the user to update
+	 * @param firstName      the updated first name
+	 * @param lastName       the updated last name
+	 * @param email          the updated email
+	 * @param phoneNumber    the updated phone number
+	 * @param address        the updated address
+	 * @param city           the updated city
+	 * @param profilePicture the updated profile picture path
+	 * @return true if the update is successful, false otherwise
+	 * @throws Exception if a database error occurs
+	 */
 	public boolean updateUser(String username, String firstName, String lastName, String email, String phoneNumber,
 			String address, String city, String profilePicture) throws Exception {
+		// Update user data
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.UPDATE_USER_BY_USERNAME)) {
 			pstmt.setString(1, firstName);
@@ -131,11 +168,20 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * Deletes a user and their associated data (subscriptions, auth tokens) from
+	 * the database.
+	 *
+	 * @param userId the ID of the user to delete
+	 * @return true if deletion is successful, false if no user is found
+	 * @throws ClassNotFoundException if the database driver is not found
+	 * @throws SQLException           if a database error occurs
+	 */
 	public boolean deleteUser(int userId) throws ClassNotFoundException, SQLException {
 		try (Connection conn = DbConfig.getDbConnection()) {
 			conn.setAutoCommit(false);
 
-			// Delete associated data
+			// Delete associated subscriptions and auth tokens
 			deleteSubscriptionsByUserId(userId, conn);
 			deleteAuthTokensById(userId);
 
@@ -148,12 +194,23 @@ public class UserService {
 				}
 			}
 
+			// Commit transaction
 			conn.commit();
 			return true;
 		}
 	}
 
+	/**
+	 * Updates the role of a user in the database.
+	 *
+	 * @param userId  the ID of the user to update
+	 * @param newRole the new role to assign
+	 * @return true if the update is successful, false otherwise
+	 * @throws SQLException           if a database error occurs
+	 * @throws ClassNotFoundException if the database driver is not found
+	 */
 	public boolean updateUserRole(int userId, String newRole) throws SQLException, ClassNotFoundException {
+		// Update user role
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.UPDATE_USER_ROLE_BY_USERID)) {
 			pstmt.setString(1, newRole);
@@ -163,12 +220,21 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * Retrieves all users from the database.
+	 *
+	 * @return a list of UserModel objects representing all users
+	 * @throws ClassNotFoundException if the database driver is not found
+	 * @throws SQLException           if a database error occurs
+	 */
 	public List<UserModel> getAllUsers() throws ClassNotFoundException, SQLException {
 		List<UserModel> users = new ArrayList<>();
+		// Fetch all users
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.SELECT_ALL_USERS);
 				ResultSet rs = pstmt.executeQuery()) {
 			while (rs.next()) {
+				// Construct UserModel for each user
 				UserModel user = new UserModel();
 				user.setUserId(rs.getInt("UserId"));
 				user.setUsername(rs.getString("Username"));
@@ -190,7 +256,15 @@ public class UserService {
 		return users;
 	}
 
+	/**
+	 * Retrieves a user by their username.
+	 *
+	 * @param username the username to search for
+	 * @return the UserModel if found, or null if no user matches the username
+	 * @throws Exception if a database error occurs
+	 */
 	public UserModel getUserByUsername(String username) throws Exception {
+		// Fetch user by username
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.SELECT_USER_BY_USERNAME)) {
 			pstmt.setString(1, username);
@@ -210,8 +284,17 @@ public class UserService {
 		}
 	}
 
+	/**
+	 * Searches for users by name or email using a partial match.
+	 *
+	 * @param query the search term to match against first name, last name, or email
+	 * @return a list of UserModel objects matching the search criteria
+	 * @throws ClassNotFoundException if the database driver is not found
+	 * @throws SQLException           if a database error occurs
+	 */
 	public List<UserModel> searchUsersByNameOrEmail(String query) throws ClassNotFoundException, SQLException {
 		List<UserModel> users = new ArrayList<>();
+		// Search users with partial match
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.SEARCH_USERS_BY_NAME_OR_EMAIL)) {
 			String searchPattern = "%" + query.toLowerCase() + "%";
@@ -220,6 +303,7 @@ public class UserService {
 			pstmt.setString(3, searchPattern);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
+					// Construct UserModel for each matching user
 					UserModel user = new UserModel();
 					user.setUserId(rs.getInt("UserId"));
 					user.setUsername(rs.getString("Username"));
@@ -242,19 +326,34 @@ public class UserService {
 		return users;
 	}
 
+	/**
+	 * Deletes all subscriptions associated with a user.
+	 *
+	 * @param userId the ID of the user whose subscriptions are to be deleted
+	 * @param conn   the database connection to use
+	 * @throws SQLException if a database error occurs
+	 */
 	private void deleteSubscriptionsByUserId(int userId, Connection conn) throws SQLException {
+		// Delete user subscriptions
 		try (PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.DELETE_SUBSCRIPTIONS_BY_USERID)) {
 			pstmt.setInt(1, userId);
 			pstmt.executeUpdate();
 		}
 	}
 
+	/**
+	 * Deletes all authentication tokens associated with a user.
+	 *
+	 * @param userId the ID of the user whose auth tokens are to be deleted
+	 * @throws SQLException           if a database error occurs
+	 * @throws ClassNotFoundException if the database driver is not found
+	 */
 	public void deleteAuthTokensById(int userId) throws SQLException, ClassNotFoundException {
+		// Delete user auth tokens
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(UserModelQueries.DELETE_AUTHTOKENS_BY_USERID)) {
 			pstmt.setInt(1, userId);
 			pstmt.executeUpdate();
 		}
 	}
-
 }

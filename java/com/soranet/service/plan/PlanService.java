@@ -16,8 +16,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Service class to manage CRUD operations and business logic
+ * related to internet plans in the ISP system.
+ */
 public class PlanService {
 
+	
+	  /**
+     * Retrieves all plans from the database.
+     *
+     * @return List of all available plans.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     * @throws SQLException if a database access error occurs.
+     */
 	public List<PlanModel> getAllPlans() throws ClassNotFoundException, SQLException {
 		List<PlanModel> plans = new ArrayList<>();
 		try (Connection conn = DbConfig.getDbConnection();
@@ -35,6 +47,16 @@ public class PlanService {
 		}
 		return plans;
 	}
+
+	
+    /**
+     * Searches plans based on partial name or speed match.
+     *
+     * @param query Search string for name or speed.
+     * @return List of matching plans.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     * @throws SQLException if a database access error occurs.
+     */
 
 	public List<PlanModel> searchPlansByNameOrSpeed(String query) throws ClassNotFoundException, SQLException {
 		List<PlanModel> plans = new ArrayList<>();
@@ -60,6 +82,16 @@ public class PlanService {
 		return plans;
 	}
 
+	
+    /**
+     * Retrieves all plans that match a specific type (e.g., residential, business).
+     *
+     * @param type Type of the plan.
+     * @return List of matching plans.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     */
+
 	public List<PlanModel> getPlansByType(String type) throws SQLException, ClassNotFoundException {
 		List<PlanModel> plans = new ArrayList<>();
 		try (Connection conn = DbConfig.getDbConnection();
@@ -83,6 +115,15 @@ public class PlanService {
 		return plans;
 	}
 
+	
+    /**
+     * Retrieves a plan by its unique ID.
+     *
+     * @param planId Unique identifier of the plan.
+     * @return The plan model if found.
+     * @throws Exception if the plan is not found.
+     */
+
 	public PlanModel getPlanById(int planId) throws Exception {
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement ps = conn.prepareStatement(PlanModelQueries.SELECT_PLAN_BY_ID)) {
@@ -101,6 +142,16 @@ public class PlanService {
 			}
 		}
 	}
+
+	
+    /**
+     * Creates a new plan in the database.
+     *
+     * @param plan Plan model to be created.
+     * @return true if the plan is created successfully; false if plan name already exists.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     * @throws SQLException if a database access error occurs.
+     */
 
 	public boolean createPlan(PlanModel plan) throws ClassNotFoundException, SQLException {
 		try (Connection conn = DbConfig.getDbConnection()) {
@@ -156,11 +207,32 @@ public class PlanService {
 					}
 				}
 			}
+			
+			try (PreparedStatement pstmt = conn.prepareStatement(PlanModelQueries.SELECT_PLAN_BY_ID)) {
+			    pstmt.setInt(1, plan.getPlanId());
+			    try (ResultSet rs = pstmt.executeQuery()) {
+			        if (rs.next()) {
+			            Timestamp createdAt = rs.getTimestamp("CreatedAt"); 
+			            plan.setCreatedAt(createdAt != null ? createdAt.toLocalDateTime() : null);
+			        }
+			    }
+			}
+
 
 			conn.commit();
 			return true;
 		}
 	}
+
+	
+    /**
+     * Updates an existing plan.
+     *
+     * @param plan Plan model with updated values.
+     * @return true if the update is successful; false if the name conflicts or update fails.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     * @throws SQLException if a database access error occurs.
+     */
 
 	public boolean updatePlan(PlanModel plan) throws ClassNotFoundException, SQLException {
 		try (Connection conn = DbConfig.getDbConnection()) {
@@ -205,6 +277,16 @@ public class PlanService {
 		}
 	}
 
+	
+    /**
+     * Deletes a plan by its ID if it exists and is not in use.
+     *
+     * @param planId ID of the plan to be deleted.
+     * @return true if the plan is deleted; false otherwise.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     * @throws SQLException if a database access error occurs.
+     */
+
 	public boolean deletePlan(int planId) throws ClassNotFoundException, SQLException {
 		try (Connection conn = DbConfig.getDbConnection()) {
 			conn.setAutoCommit(false);
@@ -240,6 +322,17 @@ public class PlanService {
 		}
 	}
 
+	
+	
+    /**
+     * Checks if a plan exists by its ID.
+     *
+     * @param planId ID of the plan.
+     * @return true if the plan exists; false otherwise.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     * @throws SQLException if a database access error occurs.
+     */
+
 	public boolean planExists(int planId) throws ClassNotFoundException, SQLException {
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(PlanModelQueries.COUNT_PLAN_BY_PLANID)) {
@@ -252,6 +345,17 @@ public class PlanService {
 		}
 		return false;
 	}
+
+	
+	
+    /**
+     * Deletes the plan only if it is not associated with any user subscriptions.
+     *
+     * @param planId ID of the plan.
+     * @return true if the plan was deleted; false if it's in use or deletion fails.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     */
 
 	public boolean deletePlanIfNoUser(int planId) throws SQLException, ClassNotFoundException {
 		// Step 1: Check if the plan is associated with any users
@@ -266,7 +370,14 @@ public class PlanService {
 		return deletePlan(planId); // Proceed with deletion
 	}
 
-	// Method to check if the plan is associated with any user subscriptions
+    /**
+     * Checks if a plan is currently in use by any subscriptions.
+     *
+     * @param planId ID of the plan.
+     * @return true if the plan is in use; false otherwise.
+     * @throws SQLException if a database access error occurs.
+     * @throws ClassNotFoundException if JDBC driver is not found.
+     */
 	private boolean checkPlanUsage(int planId) throws SQLException, ClassNotFoundException {
 		try (Connection conn = DbConfig.getDbConnection();
 				PreparedStatement pstmt = conn.prepareStatement(PlanModelQueries.COUNT_SUBS_BY_PLANID)) {
