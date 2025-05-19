@@ -18,6 +18,7 @@ import com.soranet.util.SessionUtil;
 public class PlanManagementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private PlanService planService;
+
 	@Override
 	public void init() throws ServletException {
 		planService = new PlanService();
@@ -28,9 +29,14 @@ public class PlanManagementController extends HttpServlet {
 			throws ServletException, IOException {
 		if (!isAdmin(request, response))
 			return;
-
 		try {
-			List<PlanModel> plans = planService.getAllPlans();
+			List<PlanModel> plans;
+			String searchQuery = request.getParameter("searchQuery");
+			if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+				plans = planService.searchPlansByNameOrSpeed(searchQuery);
+			} else {
+				plans = planService.getAllPlans();
+			}
 			request.setAttribute("plans", plans);
 			request.getRequestDispatcher("/WEB-INF/views/admin/planManagement.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -109,7 +115,7 @@ public class PlanManagementController extends HttpServlet {
 		PlanModel plan = new PlanModel(planId, planName, speed, price, planDuration, planDescription, type, popular,
 				features, LocalDateTime.now());
 
-		boolean success = (planId == 0) ? planService.createPlan(plan): planService.updatePlan(plan);
+		boolean success = (planId == 0) ? planService.createPlan(plan) : planService.updatePlan(plan);
 
 		request.setAttribute("successMessage",
 				success ? (planId == 0 ? "Plan created successfully" : "Plan updated successfully")

@@ -36,6 +36,30 @@ public class PlanService {
 		return plans;
 	}
 
+	public List<PlanModel> searchPlansByNameOrSpeed(String query) throws ClassNotFoundException, SQLException {
+		List<PlanModel> plans = new ArrayList<>();
+		try (Connection conn = DbConfig.getDbConnection();
+				PreparedStatement pstmt = conn.prepareStatement(PlanModelQueries.SEARCH_PLANS_BY_NAME_OR_SPEED)) {
+			String searchPattern = "%" + query.toLowerCase() + "%";
+			pstmt.setString(1, searchPattern);
+			pstmt.setString(2, searchPattern);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				while (rs.next()) {
+					PlanModel plan = new PlanModel(rs.getInt("PlanId"), rs.getString("PlanName"), rs.getString("Speed"),
+							rs.getDouble("Price"), rs.getString("PlanDuration"), rs.getString("PlanDescription"),
+							rs.getString("Type"), rs.getBoolean("Popular"),
+							rs.getString("Features") != null
+									? Arrays.asList(rs.getString("Features").split("\\s*,\\s*"))
+									: List.of(),
+							rs.getTimestamp("CreatedAt") != null ? rs.getTimestamp("CreatedAt").toLocalDateTime()
+									: null);
+					plans.add(plan);
+				}
+			}
+		}
+		return plans;
+	}
+
 	public List<PlanModel> getPlansByType(String type) throws SQLException, ClassNotFoundException {
 		List<PlanModel> plans = new ArrayList<>();
 		try (Connection conn = DbConfig.getDbConnection();
@@ -88,7 +112,7 @@ public class PlanService {
 				throw new IllegalArgumentException("Required plan fields are missing or invalid");
 			}
 
-			try (PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM Plan WHERE PlanName = ?")) {
+			try (PreparedStatement checkStmt = conn.prepareStatement(PlanModelQueries.COUNT_PLAN_BY_NAME)) {
 				checkStmt.setString(1, plan.getPlanName());
 				try (ResultSet rs = checkStmt.executeQuery()) {
 					if (rs.next() && rs.getInt(1) > 0) {
@@ -122,7 +146,8 @@ public class PlanService {
 				}
 			}
 
-			try (PreparedStatement pstmt = conn.prepareStatement("SELECT CreatedAt FROM Plan WHERE PlanId = ?")) {
+			try (PreparedStatement pstmt = conn
+					.prepareStatement(PlanModelQueries.COUNT_EXISTING_PLAN_NAME_EXCLUDING_ID)) {
 				pstmt.setInt(1, plan.getPlanId());
 				try (ResultSet rs = pstmt.executeQuery()) {
 					if (rs.next()) {
@@ -148,7 +173,7 @@ public class PlanService {
 			}
 
 			try (PreparedStatement checkStmt = conn
-					.prepareStatement("SELECT COUNT(*) FROM Plan WHERE PlanName = ? AND PlanId != ?")) {
+					.prepareStatement(PlanModelQueries.COUNT_EXISTING_PLAN_NAME_EXCLUDING_ID)) {
 				checkStmt.setString(1, plan.getPlanName());
 				checkStmt.setInt(2, plan.getPlanId());
 				try (ResultSet rs = checkStmt.executeQuery()) {
@@ -184,7 +209,7 @@ public class PlanService {
 		try (Connection conn = DbConfig.getDbConnection()) {
 			conn.setAutoCommit(false);
 
-			try (PreparedStatement checkStmt = conn.prepareStatement("SELECT COUNT(*) FROM Plan WHERE PlanId = ?")) {
+			try (PreparedStatement checkStmt = conn.prepareStatement(PlanModelQueries.COUNT_PLAN_BY_PLANID)) {
 				checkStmt.setInt(1, planId);
 				try (ResultSet rs = checkStmt.executeQuery()) {
 					if (rs.next() && rs.getInt(1) == 0) {
@@ -193,8 +218,7 @@ public class PlanService {
 				}
 			}
 
-			try (PreparedStatement checkStmt = conn
-					.prepareStatement("SELECT COUNT(*) FROM Subscription WHERE PlanId = ?")) {
+			try (PreparedStatement checkStmt = conn.prepareStatement(PlanModelQueries.COUNT_SUBS_BY_PLANID)) {
 				checkStmt.setInt(1, planId);
 				try (ResultSet rs = checkStmt.executeQuery()) {
 					if (rs.next() && rs.getInt(1) > 0) {
@@ -218,7 +242,7 @@ public class PlanService {
 
 	public boolean planExists(int planId) throws ClassNotFoundException, SQLException {
 		try (Connection conn = DbConfig.getDbConnection();
-				PreparedStatement pstmt = conn.prepareStatement("SELECT COUNT(*) FROM Plan WHERE PlanId = ?")) {
+				PreparedStatement pstmt = conn.prepareStatement(PlanModelQueries.COUNT_PLAN_BY_PLANID)) {
 			pstmt.setInt(1, planId);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				if (rs.next()) {
@@ -244,8 +268,8 @@ public class PlanService {
 
 	// Method to check if the plan is associated with any user subscriptions
 	private boolean checkPlanUsage(int planId) throws SQLException, ClassNotFoundException {
-		String sql = "SELECT COUNT(*) FROM Subscription WHERE planId = ?";
-		try (Connection conn = DbConfig.getDbConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+		try (Connection conn = DbConfig.getDbConnection();
+				PreparedStatement pstmt = conn.prepareStatement(PlanModelQueries.COUNT_SUBS_BY_PLANID)) {
 			pstmt.setInt(1, planId);
 			ResultSet rs = pstmt.executeQuery();
 			if (rs.next()) {
@@ -254,15 +278,5 @@ public class PlanService {
 		}
 		return false;
 	}
-
-//	// Method to delete the plan (assuming no users are using it)
-//	private boolean deletePlan(int planId) throws SQLException, ClassNotFoundException {
-//		String sql = "DELETE FROM Plan WHERE planId = ?";
-//		try (Connection conn = DbConfig.getDbConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-//			pstmt.setInt(1, planId);
-//			int affectedRows = pstmt.executeUpdate();
-//			return affectedRows > 0; // Return true if the plan was successfully deleted
-//		}
-//	}
 
 }

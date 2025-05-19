@@ -26,9 +26,8 @@ public class PaymentService {
 
     public List<PaymentModel> getAllPayments() throws SQLException, ClassNotFoundException {
         List<PaymentModel> payments = new ArrayList<>();
-        String sql = "SELECT * FROM Payment";
         try (Connection conn = DbConfig.getDbConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
+             PreparedStatement pstmt = conn.prepareStatement(PaymentModelQueries.GET_ALL_PAYMENTS);
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 PaymentModel payment = new PaymentModel(
@@ -42,6 +41,27 @@ public class PaymentService {
             }
         }
         return payments;
+    }
+    
+    public List<PaymentModel> getPaymentsBySubscriptionId(int subscriptionId) throws SQLException, ClassNotFoundException {
+    	List<PaymentModel> payments = new ArrayList<>();
+    	try (Connection conn = DbConfig.getDbConnection();
+                PreparedStatement pstmt = conn.prepareStatement(PaymentModelQueries.GET_PAYMENTS_BY_SUBSCRIPTION_ID)) {
+               pstmt.setInt(1, subscriptionId);
+               try (ResultSet rs = pstmt.executeQuery()) {
+                   while (rs.next()) {
+                       PaymentModel payment = new PaymentModel(
+                               rs.getInt("paymentId"),
+                               rs.getInt("subscriptionId"),
+                               rs.getDouble("amount"),
+                               rs.getTimestamp("paymentDate").toLocalDateTime(),
+                               rs.getString("paymentMethod")
+                       );
+                       payments.add(payment);
+                   }
+               }
+           }
+           return payments;
     }
 
     public boolean deletePaymentById(int paymentId) throws SQLException, ClassNotFoundException {

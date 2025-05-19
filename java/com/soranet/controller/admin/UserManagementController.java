@@ -19,117 +19,127 @@ import com.soranet.util.SessionUtil;
  */
 @WebServlet(asyncSupported = true, urlPatterns = { "/admin/users" })
 public class UserManagementController extends HttpServlet {
-    private static final long serialVersionUID = 1L;
-    private UserService userService;
+	private static final long serialVersionUID = 1L;
+	private UserService userService;
 
-    @Override
-    public void init() throws ServletException {
-    	userService = new UserService();
-    }
+	@Override
+	public void init() throws ServletException {
+		userService = new UserService();
+	}
 
-    /**
-     * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-     */
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if (!isAdmin(request)) {
-            System.out.println("UserManagementController: isAdmin failed, redirecting to login");
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!isAdmin(request)) {
+			System.out.println("UserManagementController: isAdmin failed, redirecting to login");
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
 
-        try {
-            List<UserModel> users = userService.getAllUsers();
-            request.setAttribute("users", users);
-            request.getRequestDispatcher("/WEB-INF/views/admin/userManagement.jsp").forward(request, response);
-        } catch (Exception e) {
-            request.setAttribute("errorMessage", "Error loading users: " + e.getMessage());
-            request.getRequestDispatcher("/WEB-INF/views/components/error.jsp").forward(request, response);
-        }
-    }
+		try {
+			List<UserModel> users;
+			String searchQuery = request.getParameter("searchQuery");
+			if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+				users = userService.searchUsersByNameOrEmail(searchQuery);
+			} else {
+				users = userService.getAllUsers();
+			}
+			request.setAttribute("users", users);
+			request.getRequestDispatcher("/WEB-INF/views/admin/userManagement.jsp").forward(request, response);
+		} catch (Exception e) {
+			request.setAttribute("errorMessage", "Error loading users: " + e.getMessage());
+			request.getRequestDispatcher("/WEB-INF/views/components/error.jsp").forward(request, response);
+		}
+	}
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        if (!isAdmin(request)) {
-            System.out.println("UserManagementController: isAdmin failed, redirecting to login");
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		if (!isAdmin(request)) {
+			System.out.println("UserManagementController: isAdmin failed, redirecting to login");
+			response.sendRedirect(request.getContextPath() + "/login");
+			return;
+		}
 
-        try {
-            String method = request.getParameter("_method");
-            if ("DELETE".equalsIgnoreCase(method)) {
-                // Handle delete request
-                int userId = Integer.parseInt(request.getParameter("userId"));
-                System.out.println("User id: "+ userId);
-                boolean success = userService.deleteUser(userId);
-                request.setAttribute("successMessage", success ? "User deleted successfully" : "Failed to delete user");
-                doGet(request, response);
-                return;
-            }
+		try {
+			String method = request.getParameter("_method");
+			if ("DELETE".equalsIgnoreCase(method)) {
+				// Handle delete request
+				int userId = Integer.parseInt(request.getParameter("userId"));
+				System.out.println("User id: " + userId);
+				boolean success = userService.deleteUser(userId);
+				request.setAttribute("successMessage", success ? "User deleted successfully" : "Failed to delete user");
+				doGet(request, response);
+				return;
+			}
 
-            // Handle create or update request
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            if (userId == 0) {
-                // Create new user
-                String username = request.getParameter("username");
-                String password = request.getParameter("password");
-                String firstName = request.getParameter("firstName");
-                String lastName = request.getParameter("lastName");
-                String email = request.getParameter("email");
-                String role = request.getParameter("role");
-                String phoneNumber = request.getParameter("phoneNumber");
-                String address = request.getParameter("address");
-                String city = request.getParameter("city");
+			// Handle create or update request
+			int userId = Integer.parseInt(request.getParameter("userId"));
+			if (userId == 0) {
+				// Create new user
+				String username = request.getParameter("username");
+				String password = request.getParameter("password");
+				String firstName = request.getParameter("firstName");
+				String lastName = request.getParameter("lastName");
+				String email = request.getParameter("email");
+				String role = request.getParameter("role");
+				String phoneNumber = request.getParameter("phoneNumber");
+				String address = request.getParameter("address");
+				String city = request.getParameter("city");
 
-                // Validate inputs
-                if (username == null || username.isEmpty() || password == null || password.isEmpty() ||
-                    firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty() ||
-                    email == null || email.isEmpty() || role == null || role.isEmpty()) {
-                    request.setAttribute("errorMessage", "Required fields are missing");
-                }
-                if (!"customer".equalsIgnoreCase(role) && !"admin".equalsIgnoreCase(role)) {
-                	request.setAttribute("errorMessage", "Invalid role");
-                }
-                String hashedPassword = PasswordUtil.hashPassword(password);
+				// Validate inputs
+				if (username == null || username.isEmpty() || password == null || password.isEmpty()
+						|| firstName == null || firstName.isEmpty() || lastName == null || lastName.isEmpty()
+						|| email == null || email.isEmpty() || role == null || role.isEmpty()) {
+					request.setAttribute("errorMessage", "Required fields are missing");
+				}
+				if (!"customer".equalsIgnoreCase(role) && !"admin".equalsIgnoreCase(role)) {
+					request.setAttribute("errorMessage", "Invalid role");
+				}
+				String hashedPassword = PasswordUtil.hashPassword(password);
 
-                UserModel user = new UserModel(0, username, hashedPassword, role, firstName, lastName, email,
-                                               phoneNumber, address, city);
+				UserModel user = new UserModel(0, username, hashedPassword, role, firstName, lastName, email,
+						phoneNumber, address, city);
 
-                boolean success = userService.registerUser(user);
-                request.setAttribute("successMessage", success ? "User created successfully" : "Failed to create user");
-            } else {
-                // Update user role
-                String role = request.getParameter("role");
-                if (!"customer".equalsIgnoreCase(role) && !"admin".equalsIgnoreCase(role)) {
-                	request.setAttribute("errorMessage", "Invalid role");
-                }
+				boolean success = userService.registerUser(user);
+				request.setAttribute("successMessage", success ? "User created successfully" : "Failed to create user");
+			} else {
+				// Update user role
+				String role = request.getParameter("role");
+				if (!"customer".equalsIgnoreCase(role) && !"admin".equalsIgnoreCase(role)) {
+					request.setAttribute("errorMessage", "Invalid role");
+				}
 
-                boolean success = userService.updateUserRole(userId, role);
-                request.setAttribute("successMessage", success ? "User role updated successfully" : "Failed to update user role");
-            }
-            doGet(request, response);
-        } catch (NumberFormatException e) {
-            request.setAttribute("errorMessage", "Invalid user ID");
-            doGet(request, response);
-        } catch (IllegalArgumentException e) {
-            request.setAttribute("errorMessage", e.getMessage());
-            doGet(request, response);
-        } catch (Exception e) {
-            request.setAttribute("errorMessage", "Error processing user: " + e.getMessage());
-            doGet(request, response);
-        }
-    }
+				boolean success = userService.updateUserRole(userId, role);
+				request.setAttribute("successMessage",
+						success ? "User role updated successfully" : "Failed to update user role");
+			}
+			doGet(request, response);
+		} catch (NumberFormatException e) {
+			request.setAttribute("errorMessage", "Invalid user ID");
+			doGet(request, response);
+		} catch (IllegalArgumentException e) {
+			request.setAttribute("errorMessage", e.getMessage());
+			doGet(request, response);
+		} catch (Exception e) {
+			request.setAttribute("errorMessage", "Error processing user: " + e.getMessage());
+			doGet(request, response);
+		}
+	}
 
-    private boolean isAdmin(HttpServletRequest request) {
-        UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
-        boolean isAdmin = user != null && "admin".equalsIgnoreCase(user.getRole());
-        if (!isAdmin) {
-            System.out.println("UserManagementController: isAdmin check failed. User: " + (user != null ? user.getUsername() + ", Role: " + user.getRole() : "null"));
-        }
-        return isAdmin;
-    }
+	private boolean isAdmin(HttpServletRequest request) {
+		UserModel user = (UserModel) SessionUtil.getAttribute(request, "user");
+		boolean isAdmin = user != null && "admin".equalsIgnoreCase(user.getRole());
+		if (!isAdmin) {
+			System.out.println("UserManagementController: isAdmin check failed. User: "
+					+ (user != null ? user.getUsername() + ", Role: " + user.getRole() : "null"));
+		}
+		return isAdmin;
+	}
 }

@@ -19,7 +19,7 @@ body {
 
 .container-dash {
 	display: flex;
-	height: 100vh;
+	height: 100vdh;
 }
 
 .admin-nav {
@@ -81,27 +81,34 @@ body {
 </style>
 </head>
 <body>
-<div class="container-dash">
-    <%-- Admin Nav --%>
-    <div class="admin-nav">
-        <div class="admin-title">
-            <h1>SoraNet Admin</h1>
-            <p><c:out value="${sessionScope.user.username}" /> (Role: <c:out value="${sessionScope.user.role}" />)</p>
-        </div>
-        <c:set var="currentUri" value="${request.requestURI}" />
-        <div class="admin-nav-links">
-            <a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
-            <a href="${pageContext.request.contextPath}/admin/users">User Management</a>
-            <a href="${pageContext.request.contextPath}/admin/plans">Plan Management</a>
-            <a href="${pageContext.request.contextPath}/admin/subscriptions">Subscription Management</a>
-            <a href="${pageContext.request.contextPath}/admin/payments">Payment Tracking</a>
-            <a href="${pageContext.request.contextPath}/admin/profile">Profile</a>
-        </div>
-        <div class="admin-logout">
-            <a href="${pageContext.request.contextPath}/logout">Logout</a>
-        </div>
-    </div>
-</div>
+	<div class="container-dash">
+		<%-- Admin Nav --%>
+		<div class="admin-nav">
+			<div class="admin-title">
+				<h1>SoraNet Admin</h1>
+				<p>
+					<c:out value="${sessionScope.user.username}" />
+					(Role:
+					<c:out value="${sessionScope.user.role}" />
+					)
+				</p>
+			</div>
+			<c:set var="currentUri" value="${request.requestURI}" />
+			<div class="admin-nav-links">
+				<a href="${pageContext.request.contextPath}/admin/dashboard">Dashboard</a>
+				<a href="${pageContext.request.contextPath}/admin/users">User
+					Management</a> <a href="${pageContext.request.contextPath}/admin/plans">Plan
+					Management</a> <a
+					href="${pageContext.request.contextPath}/admin/subscriptions">Subscription
+					Management</a> <a
+					href="${pageContext.request.contextPath}/admin/payments">Payment
+					Tracking</a> <a href="${pageContext.request.contextPath}/admin/profile">Profile</a>
+			</div>
+			<div class="admin-logout">
+				<a href="${pageContext.request.contextPath}/logout">Logout</a>
+			</div>
+		</div>
+	</div>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var currentUrl = window.location.pathname;

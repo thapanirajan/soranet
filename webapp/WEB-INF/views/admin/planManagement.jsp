@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -10,16 +9,6 @@
 <title>SoraNet - Plan Management</title>
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/admin/planManagement.css">
-	<style>
-	.dashboard-container {
-	flex-grow: 1;
-	padding: 2rem;
-	margin-left: 40px;
-	margin-top: 80px; 
-	overflow-y: auto;
-}
-	
-	</style>
 </head>
 <body>
 	<div class="container-dash">
@@ -50,9 +39,17 @@
 			</div>
 
 			<div class="search-bar">
-				<label for="searchInput">Search by plan name or speed:</label> <input
-					type="text" id="searchInput"
-					placeholder="Search by plan name or speed...">
+				<form action="${pageContext.request.contextPath}/admin/plans"
+					method="get">
+					<label for="searchQuery"></label> <input type="text"
+						name="searchQuery" id="searchQuery"
+						placeholder="Search by plan name or speed..."
+						value="${param.searchQuery}">
+					<button type="submit">Search</button>
+					<c:if test="${not empty param.searchQuery}">
+						<a href="${pageContext.request.contextPath}/admin/plans">Clear</a>
+					</c:if>
+				</form>
 			</div>
 
 			<div class="table-container">
@@ -88,7 +85,6 @@
 										method="post" style="display: inline;">
 										<input type="hidden" name="_method" value="DELETE"> <input
 											type="hidden" name="planId" value="${plan.planId}">
-
 										<button type="submit" class="delete-button"
 											onclick="return confirm('Are you sure you want to delete plan ${plan.planName}?')"
 											aria-label="Delete plan ${plan.planName}">Delete</button>
@@ -160,31 +156,10 @@
 		</div>
 	</div>
 
-	 <script>
+	<script>
         const planModal = document.getElementById('planModal');
         const planForm = document.getElementById('planForm');
         const modalTitle = document.getElementById('modalTitle');
-
-        // Add event listener for search input
-        document.getElementById('searchInput').addEventListener('input', function(event) {
-            filterPlans(event.target.value);
-        });
-
-        function filterPlans(query) {
-            console.log(`Filtering plans with query: ${query}`);
-            const plansTable = document.getElementById('plansTable');
-            if (!plansTable) {
-                console.error('Plans table not found');
-                return;
-            }
-            const rows = plansTable.querySelectorAll('tbody tr');
-            query = query.toLowerCase().trim();
-            rows.forEach(row => {
-                const planId = row.cells[0].textContent.toLowerCase();
-                const planName = row.cells[1].textContent.toLowerCase();
-                row.style.display = planId.includes(query) || planName.includes(query) ? '' : 'none';
-            });
-        }
 
         function openAddModal() {
             planForm.reset();
@@ -213,4 +188,3 @@
     </script>
 </body>
 </html>
-

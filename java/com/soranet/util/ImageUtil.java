@@ -10,9 +10,7 @@ import jakarta.servlet.http.Part;
 public class ImageUtil {
 
     public static final String WEB_RELATIVE_UPLOAD_DIR_ROOT = "resources/uploads";
-    // It's better if the specific default filename is tied to the folder it's in,
-    // or the controller specifies the full default path.
-    // For simplicity, let's assume a generic name. The controller will build the full default path.
+
     public static final String GENERIC_DEFAULT_IMAGE_FILENAME = "default_pp.jpg"; 
 
     public String getImageNameFromPart(Part part) {
@@ -106,39 +104,4 @@ public class ImageUtil {
             return null;
         }
     }
-
-	/*
-	 * public boolean deleteImageFromWorkspace(String absoluteWorkspaceWebappPath,
-	 * String webRelativeImagePathToDelete) { if (webRelativeImagePathToDelete ==
-	 * null || webRelativeImagePathToDelete.isEmpty() ||
-	 * webRelativeImagePathToDelete.endsWith(GENERIC_DEFAULT_IMAGE_FILENAME)) { //
-	 * Avoid deleting the generic default System.out.
-	 * println("ImageUtil: Deletion skipped for null, empty, or generic default image path: "
-	 * + webRelativeImagePathToDelete); return true; }
-	 * 
-	 * try { String fullDiskPath = absoluteWorkspaceWebappPath + File.separator +
-	 * webRelativeImagePathToDelete.replace('/', File.separatorChar); File
-	 * fileToDelete = new File(fullDiskPath);
-	 * 
-	 * if (fileToDelete.exists()) { // Add an extra check to prevent deleting
-	 * outside the webapp/resources/uploads structure for safety String
-	 * canonicalSaveDir = new File(absoluteWorkspaceWebappPath,
-	 * WEB_RELATIVE_UPLOAD_DIR_ROOT).getCanonicalPath(); String
-	 * canonicalFileToDelete = fileToDelete.getCanonicalPath();
-	 * 
-	 * if (!canonicalFileToDelete.startsWith(canonicalSaveDir)) { System.err.
-	 * println("ImageUtil: Security risk! Attempt to delete file outside designated upload directory: "
-	 * + canonicalFileToDelete); return false; }
-	 * 
-	 * if (Files.deleteIfExists(fileToDelete.toPath())) {
-	 * System.out.println("ImageUtil: Successfully deleted old image: " +
-	 * fullDiskPath); return true; } else { System.err.
-	 * println("ImageUtil: Failed to delete old image (deleteIfExists returned false): "
-	 * + fullDiskPath); return false; } } else {
-	 * System.out.println("ImageUtil: Old image not found for deletion: " +
-	 * fullDiskPath); return true; } } catch (IOException e) {
-	 * System.err.println("ImageUtil: Error deleting image " +
-	 * webRelativeImagePathToDelete + ": " + e.getMessage()); e.printStackTrace();
-	 * return false; } }
-	 */
 }

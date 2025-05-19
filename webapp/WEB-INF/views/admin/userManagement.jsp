@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -13,7 +12,9 @@
 </head>
 <body>
 	<div class="container-dash">
-		<%@ include file="/WEB-INF/views/components/adminNav.jsp"%>
+		<div class="auth-nav">
+			<%@ include file="/WEB-INF/views/components/adminNav.jsp"%>
+		</div>
 		<div class="dashboard-container">
 			<h2>User Management</h2>
 
@@ -40,9 +41,17 @@
 			</div>
 
 			<div class="search-bar">
-				<label for="searchInput">Search by name or email:</label> <input
-					type="text" id="searchInput"
-					placeholder="Search by name or email...">
+				<form action="${pageContext.request.contextPath}/admin/users"
+					method="get">
+					<label for="searchQuery"></label> <input type="text"
+						name="searchQuery" id="searchQuery"
+						placeholder="Search by name or email..."
+						value="${param.searchQuery}">
+					<button type="submit">Search</button>
+					<c:if test="${not empty param.searchQuery}">
+						<a href="${pageContext.request.contextPath}/admin/users">Clear</a>
+					</c:if>
+				</form>
 			</div>
 
 			<div class="table-container">
@@ -91,7 +100,6 @@
 				</c:choose>
 			</div>
 
-			<!-- Edit Role Modal -->
 			<div class="modal" id="editRoleModal">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -125,7 +133,6 @@
 				</div>
 			</div>
 
-			<!-- Add User Modal -->
 			<div class="modal" id="addUserModal">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -190,32 +197,8 @@
 	</div>
 
 	<script>
-        const usersTable = document.getElementById('usersTable');
-        const searchInput = document.getElementById('searchInput');
         const editModal = document.getElementById('editRoleModal');
         const addModal = document.getElementById('addUserModal');
-        let timeout;
-
-        // Add event listener for search input with debouncing
-        searchInput.addEventListener('input', function(event) {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => filterUsers(event.target.value), 300);
-        });
-
-        function filterUsers(query) {
-            console.log(`Filtering users with query: ${query}`);
-            if (!usersTable) {
-                console.error('Users table not found');
-                return;
-            }
-            const rows = usersTable.querySelectorAll('tbody tr');
-            query = query.toLowerCase();
-            rows.forEach(row => {
-                const name = row.cells[1].textContent.toLowerCase();
-                const email = row.cells[2].textContent.toLowerCase();
-                row.style.display = name.includes(query) || email.includes(query) ? '' : 'none';
-            });
-        }
 
         function openEditModal(userId, userName, userRole) {
             document.getElementById('modalUserId').value = userId;
@@ -239,4 +222,3 @@
     </script>
 </body>
 </html>
-

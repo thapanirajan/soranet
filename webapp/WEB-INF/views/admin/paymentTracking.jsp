@@ -7,7 +7,45 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SoraNet - Payment Tracking</title>
- <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/paymentTracking.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/css/admin/paymentTracking.css">
+<style>
+.search-bar form {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.search-bar button[type="submit"] {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.3s ease;
+}
+
+.search-bar button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+.search-bar a {
+	color: #dc3545;
+	text-decoration: none;
+	font-size: 14px;
+	padding: 8px 12px;
+	border: 1px solid #dc3545;
+	border-radius: 4px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-bar a:hover {
+	background-color: #dc3545;
+	color: white;
+}
+</style>
 </head>
 <body>
 	<div class="container-dash">
@@ -31,9 +69,16 @@
 			</c:if>
 
 			<div class="search-bar">
-				<input type="text" id="searchInput"
-					placeholder="Search by subscription ID "
-					oninput="filterPayments()">
+				<form action="${pageContext.request.contextPath}/admin/payments"
+					method="get">
+					<input type="text" name="subscriptionId"
+						placeholder="Search by subscription ID"
+						value="${param.subscriptionId}">
+					<button type="submit">Search</button>
+					<c:if test="${not empty param.subscriptionId}">
+						<a href="${pageContext.request.contextPath}/admin/payments">Clear</a>
+					</c:if>
+				</form>
 			</div>
 
 			<div class="table-container">
@@ -62,20 +107,5 @@
 			</div>
 		</div>
 	</div>
-
-	 <script>
-        const paymentsTable = document.getElementById('paymentsTable');
-        const searchInput = document.getElementById('searchInput');
-
-        function filterPayments() {
-            const query = searchInput.value.toLowerCase().trim();
-            const rows = paymentsTable.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const paymentId = row.cells[0].textContent.toLowerCase();
-                row.style.display = paymentId.includes(query) ? '' : 'none';
-            });
-        }
-    </script>
-    
 </body>
 </html>

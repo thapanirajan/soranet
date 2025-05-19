@@ -23,7 +23,6 @@ public class SubscriptionManagementController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	SubscriptionService subscriptionService = new SubscriptionService();
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		if (!isAdmin(request)) {
@@ -32,7 +31,19 @@ public class SubscriptionManagementController extends HttpServlet {
 		}
 
 		try {
-			List<SubscriptionModel> subscriptions = subscriptionService.getAllSubscriptions();
+			List<SubscriptionModel> subscriptions;
+			String searchQuery = request.getParameter("searchQuery");
+			if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+				try {
+					int searchId = Integer.parseInt(searchQuery);
+					subscriptions = subscriptionService.getSubscriptionsByUserOrPlanId(searchId);
+				} catch (NumberFormatException e) {
+					request.setAttribute("errorMessage", "Invalid User ID or Plan ID format");
+					subscriptions = subscriptionService.getAllSubscriptions();
+				}
+			} else {
+				subscriptions = subscriptionService.getAllSubscriptions();
+			}
 			request.setAttribute("subscriptions", subscriptions);
 			request.getRequestDispatcher("/WEB-INF/views/admin/subscriptionManagement.jsp").forward(request, response);
 		} catch (Exception e) {
@@ -80,7 +91,6 @@ public class SubscriptionManagementController extends HttpServlet {
 
 			SubscriptionModel subscription = new SubscriptionModel(0, userId, planId, startDate, endDate, null);
 
-			
 			boolean success = subscriptionService.createSubscriptionWithPayment(subscription, paymentMethod);
 			request.setAttribute("successMessage",
 					success ? "Subscription and payment created successfully" : "Failed to create subscription");

@@ -10,11 +10,16 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/css/admin/subscriptionManagement.css">
 <style>
+
+.container-dashboard {
+	display: flex;
+	min-height: 100vh;
+	gap: 1rem;
+}
 .action-bar button {
 	padding: 0.75rem 1.5rem;
 	background-color: #1f2937;
 	color: #fff;
-	margin-bottom: 1rem;
 	border: none;
 	border-radius: 4px;
 	cursor: pointer;
@@ -26,15 +31,62 @@
 	background-color: #374151;
 }
 
+.search-bar form {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
 
-.action-bar button:hover {
-	background-color: #374151;
+.search-bar button[type="submit"] {
+	background-color: #007bff;
+	color: white;
+	border: none;
+	padding: 8px 16px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+	transition: background-color 0.3s ease;
+}
+
+.search-bar button[type="submit"]:hover {
+	background-color: #0056b3;
+}
+
+.search-bar a {
+	color: #dc3545;
+	text-decoration: none;
+	font-size: 14px;
+	padding: 8px 12px;
+	border: 1px solid #dc3545;
+	border-radius: 4px;
+	transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.search-bar a:hover {
+	background-color: #dc3545;
+	color: white;
+}
+
+.admin-nav{
+	position: fixed;
+	left: 0;
+	left: 0;
+}
+
+.dashboard-container {
+	flex: 1;
+	padding: 2rem;
+	margin-left: 17rem;
+	overflow-y: auto;
+	z-index: 1000;
 }
 </style>
 </head>
 <body>
-	<div class="container-dash">
-		<%@ include file="/WEB-INF/views/components/adminNav.jsp"%>
+	<div class="container-dashboard">
+		<div class="admin-nav">
+			<%@ include file="/WEB-INF/views/components/adminNav.jsp"%>
+		</div>
 		<div class="dashboard-container">
 			<h2>Subscription Management</h2>
 
@@ -57,11 +109,19 @@
 
 			<div class="action-bar">
 				<button onclick="openCreateModal()"
-					aria-label="Add new subscription">Add New Subscription</button>
+					aria-label="Add new subscription" style="margin-bottom:1rem;">Add New Subscription</button>
 				<div class="search-bar">
-					<input type="text" id="searchInput" name="searchInput"
-						placeholder="Search by user ID or plan ID..."
-						oninput="filterSubscriptions()">
+					<form
+						action="${pageContext.request.contextPath}/admin/subscriptions"
+						method="get">
+						<input type="text" name="searchQuery"
+							placeholder="Search by user ID or plan ID"
+							value="${param.searchQuery}">
+						<button type="submit">Search</button>
+						<c:if test="${not empty param.searchQuery}">
+							<a href="${pageContext.request.contextPath}/admin/subscriptions">Clear</a>
+						</c:if>
+					</form>
 				</div>
 			</div>
 
@@ -93,7 +153,6 @@
 				</table>
 			</div>
 
-			<!-- Create Subscription Modal -->
 			<div class="modal" id="createSubscriptionModal">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -142,28 +201,17 @@
 	</div>
 
 	<script>
-        const subscriptionsTable = document.getElementById('subscriptionsTable');
-        const searchInput = document.getElementById('searchInput');
-        const createSubscriptionModal = document.getElementById('createSubscriptionModal');
+		const createSubscriptionModal = document
+				.getElementById('createSubscriptionModal');
 
-        function filterSubscriptions() {
-            const query = searchInput.value.toLowerCase();
-            const rows = subscriptionsTable.querySelectorAll('tbody tr');
-            rows.forEach(row => {
-                const userId = row.cells[1].textContent.toLowerCase();
-                const planId = row.cells[2].textContent.toLowerCase();
-                row.style.display = userId.includes(query) || planId.includes(query) ? '' : 'none';
-            });
-        }
+		function openCreateModal() {
+			document.getElementById('createSubscriptionForm').reset();
+			createSubscriptionModal.style.display = 'flex';
+		}
 
-        function openCreateModal() {
-            document.getElementById('createSubscriptionForm').reset();
-            createSubscriptionModal.style.display = 'flex';
-        }
-
-        function closeCreateModal() {
-            createSubscriptionModal.style.display = 'none';
-        }
-    </script>
+		function closeCreateModal() {
+			createSubscriptionModal.style.display = 'none';
+		}
+	</script>
 </body>
 </html>

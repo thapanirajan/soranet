@@ -19,39 +19,41 @@ body {
 }
 
 .logo {
-	font-size: 1.5rem;
+	font-size: 2.5rem;
 	font-weight: bold;
-	color: #064e3b;
+	color: #080c18;
 }
 
 .signup-link {
 	font-size: 0.875rem;
-	color: #059669;
+}
+
+.signup-link a {
+	color: #003ffc;
+	font-size: 1.2rem;
 }
 
 .container {
 	min-height: calc(100vh - 200px);
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	align-items: center;
 }
 
 .login-box {
-	border: 1px solid #000000;
-	border-top: 1px solid #059669;
+	border: 2px solid #080c18;
 	padding: 5rem;
 	box-shadow: 0 20px 25px -5px rgb(0 0 0/ 0.1), 0 8px 10px -6px
 		rgb(0 0 0/ 0.1);
 	border-radius: 0.8rem;
 	background-color: white;
-	border: 1px solid #059669;
 	width: 40rem;
 }
 
 .login-title {
 	margin-bottom: 2rem;
-	font-size: 1.875rem;
-	color: #064e3b;
+	font-size: 3rem;
+	color: #080c18;
 	font-weight: bold;
 	text-align: center;
 }
@@ -59,15 +61,16 @@ body {
 .login-form {
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
+	gap: 2.5rem;
 	width: 100%;
 }
 
 .input-field {
 	width: 100%;
-	padding: 0.5rem 0;
+	padding: 1rem 0;
 	border: none;
 	outline: none;
+	font-size: 1.2rem;
 }
 
 .underline {
@@ -83,9 +86,11 @@ body {
 }
 
 .login-button {
-	padding: 0.5rem 1.5rem;
-	background-color: #059669;
+	width: 100%;
+	padding: 1rem 0;
+	background-color: #080c18;
 	color: white;
+	font-size: 1rem;
 	font-weight: bold;
 	border: 1px solid #1e293b;
 	border-radius: 0.25rem;
@@ -114,4 +119,4 @@ body {
 
 small {
 	font-size: 14px;
-} 
+}

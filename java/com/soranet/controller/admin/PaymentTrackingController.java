@@ -34,7 +34,19 @@ public class PaymentTrackingController extends HttpServlet {
 		}
 
 		try {
-			List<PaymentModel> payments = paymentService.getAllPayments();
+			List<PaymentModel> payments;
+			String subscriptionIdParam = request.getParameter("subscriptionId");
+			if (subscriptionIdParam != null && !subscriptionIdParam.trim().isEmpty()) {
+				try {
+					int subscriptionId = Integer.parseInt(subscriptionIdParam);
+					payments = paymentService.getPaymentsBySubscriptionId(subscriptionId);
+				} catch (NumberFormatException e) {
+					request.setAttribute("errorMessage", "Invalid Subscription ID format");
+					payments = paymentService.getAllPayments();
+				}
+			} else {
+				payments = paymentService.getAllPayments();
+			}
 			request.setAttribute("payments", payments);
 			request.getRequestDispatcher("/WEB-INF/views/admin/paymentTracking.jsp").forward(request, response);
 		} catch (Exception e) {
